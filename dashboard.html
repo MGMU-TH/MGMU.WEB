@@ -25,9 +25,31 @@ input,textarea,select{width:100%;padding:10px;border:1px solid #d1d5db;border-ra
 </style>
 </head>
 <body>
-<script>
-if(localStorage.getItem('mgmu_user')!=='admin'){ location.href='login.html'; }
-function logout(){ localStorage.clear(); location.href='login.html'; }
+<!-- แก้ให้ทำงานได้: รองรับทั้ง localStorage และ Firebase Auth -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+const firebaseConfig = {
+  apiKey: "AIzaSyCg8IN6QUb4O3TAk-kGkoiefxGsezw1dPE",
+  authDomain: "mgmu-7ac39.firebaseapp.com",
+  projectId: "mgmu-7ac39",
+  storageBucket: "mgmu-7ac39.firebasestorage.app",
+  messagingSenderId: "371565700622",
+  appId: "1:371565700622:web:382d7a4a695daa2b1dfe5f"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+onAuthStateChanged(auth, (user)=>{
+  const localAdmin = localStorage.getItem('mgmu_user')==='admin';
+  if(!user &&!localAdmin){
+    location.href='login.html';
+  }
+});
+window.logout = async ()=>{
+  try{ await signOut(auth); }catch(e){}
+  localStorage.clear();
+  location.href='login.html';
+}
 </script>
 
 <div class="sidebar">
@@ -86,7 +108,7 @@ function logout(){ localStorage.clear(); location.href='login.html'; }
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, serverTimestamp, query, orderBy, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
 const firebaseConfig = {
@@ -98,18 +120,17 @@ const firebaseConfig = {
   appId: "1:371565700622:web:382d7a4a695daa2b1dfe5f"
 };
 
-let db, storage, useFirebase = false;
+let db, storage;
 try{
   const app = initializeApp(firebaseConfig);
-  if(firebaseConfig.apiKey!=="YOUR_API_KEY"){
-    db = getFirestore(app);
-    storage = getStorage(app);
-    useFirebase = true;
-    document.getElementById('firebase-status').className='status ok';
-    document.getElementById('firebase-status').textContent='✅ ต่อ Firebase แล้ว - 2 ระบบ Real-time ทำงาน';
-    initRealtime();
-  }
-}catch(e){ console.log("Firebase not configured"); }
+  db = getFirestore(app);
+  storage = getStorage(app);
+  document.getElementById('firebase-status').className='status ok';
+  document.getElementById('firebase-status').textContent='✅ ต่อ Firebase แล้ว - 2 ระบบ Real-time ทำงาน';
+  initRealtime();
+}catch(e){
+  document.getElementById('firebase-status').textContent='❌ Error: '+e.message;
+}
 
 function initRealtime(){
   onSnapshot(query(collection(db, "students"), orderBy("createdAt","desc")), (snap)=>{
@@ -128,6 +149,7 @@ function initRealtime(){
   });
 }
 
+// แก้ให้ทำงานได้: บันทึกแบบ Document ID = รหัสนักศึกษา เพื่อให้ check.html ค้นหาเจอ
 window.addStudent = async ()=>{
   const studentId=document.getElementById('stu-id').value.trim();
   const fullName=document.getElementById('stu-name').value.trim();
@@ -135,14 +157,8 @@ window.addStudent = async ()=>{
   const year=document.getElementById('stu-year').value.trim();
   const status=document.getElementById('stu-status').value;
   if(!studentId||!fullName) return alert('ใส่รหัสนักศึกษาและชื่อ–นามสกุลก่อน');
-  if(!useFirebase){
-    const list=JSON.parse(localStorage.getItem('mgmu_students')||'[]');
-    if(list.find(x=>x.studentId===studentId)) return alert('รหัสนักศึกษานี้มีแล้ว');
-    list.unshift({id:Date.now(), studentId, fullName, faculty, year, status});
-    localStorage.setItem('mgmu_students', JSON.stringify(list));
-    renderMocks(); return;
-  }
-  await addDoc(collection(db,"students"),{studentId, fullName, faculty, year, status, createdAt:serverTimestamp()});
+  // ใช้ setDoc แทน addDoc เพื่อให้ ID = รหัสนักศึกษา (check.html จะได้หาเจอทั้งแบบ doc ID และแบบ query field)
+  await setDoc(doc(db,"students",studentId),{studentId, fullName, name:fullName, faculty, year, status, createdAt:serverTimestamp()});
   document.getElementById('stu-id').value=''; document.getElementById('stu-name').value='';
 };
 
@@ -151,35 +167,18 @@ window.addNews = async ()=>{
   const desc=document.getElementById('news-desc').value.trim();
   const file=document.getElementById('news-img').files[0];
   if(!title) return alert('ใส่หัวข้อก่อน');
-  if(!useFirebase){
-    const list=JSON.parse(localStorage.getItem('mgmu_news')||'[]');
-    list.unshift({id:Date.now(), title, desc});
-    localStorage.setItem('mgmu_news', JSON.stringify(list));
-    renderMocks(); return;
-  }
   let imgUrl="";
   if(file){ const r=ref(storage, 'news/'+Date.now()+'_'+file.name); await uploadBytes(r,file); imgUrl=await getDownloadURL(r); }
   await addDoc(collection(db,"news"),{title,desc,imgUrl,createdAt:serverTimestamp()});
+  document.getElementById('news-title').value=''; document.getElementById('news-desc').value='';
 };
 
 window.delStudent = async (id)=>{
-  if(!useFirebase){ let l=JSON.parse(localStorage.getItem('mgmu_students')||'[]'); l=l.filter(x=>String(x.id)!==String(id)); localStorage.setItem('mgmu_students',JSON.stringify(l)); renderMocks(); return;}
   if(confirm('ลบนักศึกษาคนนี้?')) await deleteDoc(doc(db,"students",id));
 };
 window.delNews = async (id)=>{
-  if(!useFirebase){ let l=JSON.parse(localStorage.getItem('mgmu_news')||'[]'); l=l.filter(x=>String(x.id)!==String(id)); localStorage.setItem('mgmu_news',JSON.stringify(l)); renderMocks(); return;}
   if(confirm('ลบข่าวนี้?')) await deleteDoc(doc(db,"news",id));
 };
-
-function renderMocks(){
-  const students=JSON.parse(localStorage.getItem('mgmu_students')||'[]');
-  document.getElementById('count-students').textContent=students.length;
-  document.getElementById('student-list').innerHTML=students.map(s=>`<div style="padding:8px;border-bottom:1px solid #eee;font-size:13px"><b>${s.studentId}</b> - ${s.fullName} <button onclick="delStudent(${s.id})" style="color:red;border:none;background:none;float:right">ลบ</button></div>`).join('');
-  const news=JSON.parse(localStorage.getItem('mgmu_news')||'[]');
-  document.getElementById('count-news').textContent=news.length;
-  document.getElementById('news-list').innerHTML=news.map(n=>`<div style="padding:8px;border-bottom:1px solid #eee"><b>${n.title}</b> <button onclick="delNews(${n.id})" style="color:red;border:none;background:none;float:right">ลบ</button></div>`).join('');
-}
-if(!useFirebase) renderMocks();
 </script>
 </body>
 </html>
