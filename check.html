@@ -1,169 +1,172 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ตรวจสอบรายชื่อนักศึกษา | MGMU</title>
-<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;700&family=Noto+Serif+Thai:wght@700&display=swap" rel="stylesheet">
-<style>
-:root{--navy:#0d1b36;--navy2:#101f3f;--gold:#c9a86a;--gold2:#e9c77a;--light:#f4f6f9;}
-*{margin:0;padding:0;box-sizing:border-box}body{font-family:"Sarabun",sans-serif;background:#fff;color:#222;line-height:1.6}a{text-decoration:none;color:inherit}
-.topbar{background:var(--navy);color:#fff;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.2)}
-.topbar-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 24px}
-.logo-wrap{display:flex;align-items:center;gap:12px}
-.logo-wrap img{height:54px;width:auto;object-fit:contain}
-.logo-text strong{font-family:"Noto Serif Thai",serif;font-size:18px;letter-spacing:1px;display:block}
-.logo-text span{font-size:11px;opacity:.8;display:block;margin-top:-4px}
-.nav{display:flex;gap:22px;font-size:14px;align-items:center}
-.nav a{opacity:.9;padding:4px 0;border-bottom:2px solid transparent;transition:.2s}
-.nav a:hover,.nav a.active{border-bottom:2px solid var(--gold);color:var(--gold2);opacity:1}
-.btn-gold{background:var(--gold);color:var(--navy);padding:6px 16px;border-radius:20px;font-weight:700;font-size:13px}
-.hero-about{position:relative;height:320px;background:var(--navy);overflow:hidden;display:flex;align-items:center}
-.hero-about img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.35}
-.hero-about-overlay{position:absolute;inset:0;background:linear-gradient(90deg,#0d1b36 0%,#0d1b36cc 60%,transparent)}
-.hero-about-content{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:40px 24px;color:#fff;width:100%}
-.page-wrap{max-width:1080px;margin:0 auto;padding:32px 24px;min-height:60vh}
-.badge{display:inline-block;background:var(--gold);color:var(--navy);padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:8px}
-.search-card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:24px;box-shadow:0 10px 30px rgba(13,27,54,.08);margin-top:-60px;position:relative;z-index:3}
-.search-card input{width:100%;padding:14px 16px;border:1px solid #d1d5db;border-radius:10px;font-size:16px;font-family:"Sarabun";margin-bottom:12px}
-.btn-search{width:100%;padding:14px;background:var(--navy);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-size:16px;transition:.2s}
-.btn-search:hover{background:var(--navy2)}
-.result{margin-top:20px;padding:20px;border-radius:12px;display:none;font-size:14px}
-.result.ok{display:block;background:#f0fdf4;border:1px solid #bbf7d0}
-.result.err{display:block;background:#fef2f2;border:1px solid #fecaca}
-table.info{width:100%;border-collapse:collapse;margin-top:10px}
-table.info td{padding:10px 0;border-bottom:1px solid #e5e7eb}
-table.info td:first-child{opacity:.6;width:150px}
-footer{background:var(--navy);color:#fff;padding:32px 24px 16px;margin-top:60px}
-.footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.2fr 0.6fr 0.6fr 0.8fr;gap:24px}
-footer h4{color:var(--gold2);margin-bottom:8px;font-size:14px}
-footer small,footer li{font-size:13px;opacity:.8;list-style:none;margin-bottom:6px}
-.copy{border-top:1px solid #ffffff14;margin-top:24px;padding-top:12px;display:flex;justify-content:space-between;font-size:12px;opacity:.6;max-width:1280px;margin-left:auto;margin-right:auto}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ตรวจสอบรายชื่อ - MGMU</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;700&family=Noto+Serif+Thai:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --navy:#0d1b36;
+      --gold:#c9a86a;
+      --gold2:#e9c77a;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:"Sarabun",sans-serif;background:#fff;color:#222;line-height:1.6}
+    a{text-decoration:none;color:inherit}
+    /* Topbar immutable */
+    .topbar{background:#0d1b36;color:#fff;position:sticky;top:0;z-index:50}
+    .topbar-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 24px}
+    .logo-wrap{display:flex;align-items:center;gap:12px}
+    .logo-wrap img{height:54px;width:auto;object-fit:contain}
+    .logo-text strong{font-family:"Noto Serif Thai",serif;font-size:18px;letter-spacing:1px;display:block}
+    .logo-text span{font-size:11px;opacity:.8;display:block;margin-top:-4px}
+    .nav{display:flex;gap:22px;font-size:14px;align-items:center}
+    .nav a.active{border-bottom:2px solid #c9a86a;color:#e9c77a;font-weight:700}
+    .btn-gold{background:#c9a86a;color:#0d1b36;padding:6px 16px;border-radius:20px;font-weight:700;font-size:13px}
+    /* Content */
+    .page-head{background:#101f3f;color:#fff;padding:24px}
+    .page-head-inner{max-width:1280px;margin:0 auto}
+    .page-head h1{font-family:"Noto Serif Thai",serif;font-size:24px}
+    .page-head p{font-size:12px;color:var(--gold2);opacity:.8;margin-top:4px}
+    .content{max-width:720px;margin:36px auto;padding:0 24px}
+    .card{border:1px solid #e6e6e6;border-radius:10px;padding:24px}
+    .card h2{font-size:18px;color:var(--navy);text-align:center;margin-bottom:6px}
+    .card .sub{font-size:13px;color:#666;text-align:center;margin-bottom:18px}
+    .form{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+    .form input{flex:1;min-width:220px;max-width:400px;padding:12px;border:1px solid #d0d7e3;border-radius:8px;font-size:14px}
+    .form button{background:var(--navy);color:#fff;border:none;padding:12px 20px;border-radius:8px;cursor:pointer;font-weight:700}
+    #result{margin-top:18px;padding:14px;border-radius:8px;display:none;font-size:14px}
+    .ok{background:#e6f4ea;border:1px solid #b7e1c2;color:#14532d;display:block!important}
+    .no{background:#fde8e8;border:1px solid #f5b5b5;color:#7a1f1f;display:block!important}
+    .wait{background:#fff8d6;border:1px solid #ffe18a;color:#665500;display:block!important}
+    /* Footer immutable */
+    footer{background:#0d1b36;color:#fff;padding:32px 24px 16px;margin-top:60px}
+    .footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.2fr .6fr .6fr .8fr;gap:24px}
+    footer h4{font-size:14px;margin-bottom:10px}
+    footer ul{list-style:none;font-size:13px;line-height:2;opacity:.85}
+    footer input{width:100%;padding:8px;border-radius:4px;border:none;margin-top:6px}
+    .footer-btn{margin-top:8px;background:#c9a86a;border:none;padding:8px 16px;border-radius:20px;font-weight:700;width:100%;cursor:pointer}
+    .copy{border-top:1px solid #ffffff14;margin-top:24px;padding-top:12px;display:flex;justify-content:space-between;font-size:12px;opacity:.6}
+    @media(max-width:900px){.footer-inner{grid-template-columns:1fr 1fr}.nav{display:none}}
+  </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="topbar-inner">
-    <a class="logo-wrap" href="index.html">
-      <img src="mgmu.png" alt="MGMU" />
-      <div class="logo-text"><strong>MGMU</strong><span>METROPOLITAN GUARDIAN MEDICAL UNIVERSITY</span></div>
-    </a>
-    <nav class="nav">
-      <a href="index.html">หน้าแรก</a>
-      <a href="faculties.html">คณะและสาขาวิชา</a>
-      <a href="executives.html">ทำเนียบผู้บริหาร</a>
-      <a href="students.html">นักศึกษา</a>
-      <a href="research.html">งานวิจัย</a>
-      <a href="contact.html">ติดต่อเรา</a>
-    </nav>
-    <a class="btn-gold" href="login.html" id="loginBtn">เข้าสู่ระบบ</a>
-  </div>
-</header>
-
-<section class="hero-about">
-  <img src="mgmu_t.jpg" alt="MGMU Building" onerror="this.src='mgmu_tow.png'">
-  <div class="hero-about-overlay"></div>
-  <div class="hero-about-content">
-    <span class="badge">STUDENT VERIFICATION</span>
-    <h1 style="font-size:34px;line-height:1.2;font-weight:700">ตรวจสอบรายชื่อนักศึกษา</h1>
-    <p style="opacity:.8;margin-top:8px;max-width:500px">กรอกรหัสนักศึกษาเพื่อตรวจสอบข้อมูลจากระบบฐานข้อมูลกลาง แบบ Real-time</p>
-  </div>
-</section>
-
-<div class="page-wrap">
-  <div class="search-card">
-    <h3 style="color:var(--navy);margin-bottom:4px">🔍 ค้นหาข้อมูลนักศึกษา</h3>
-    <p style="font-size:13px;opacity:.7;margin-bottom:16px">ข้อมูล 5 ฟิลด์: รหัสนักศึกษา / ชื่อ–นามสกุล / คณะ / ชั้นปี / สถานะนักศึกษา</p>
-    
-    <label style="font-weight:700;font-size:14px">รหัสนักศึกษา</label>
-    <input id="studentIdInput" placeholder="กรุณากรอกรหัสนักศึกษา" autofocus>
-    <button class="btn-search" onclick="searchStudent()">ตรวจสอบรายชื่อ</button>
-    
-    <div id="result" class="result"></div>
-    <div id="status" style="margin-top:12px;font-size:12px;color:#666;text-align:center"></div>
-  </div>
-
-  <div style="margin-top:20px;background:var(--light);border-radius:12px;padding:16px;font-size:13px;display:flex;gap:12px;align-items:flex-start">
-    <div style="font-size:20px">ℹ️</div>
-    <div><b>หมายเหตุ:</b> ระบบนี้ดึงข้อมูลจากระบบฐานข้อมูลกลาง ที่แอดมินเพิ่มไว้เท่านั้น ถ้าไม่พบรายชื่อกรุณาติดต่อฝ่ายทะเบียน<br><small style="opacity:.6">หากไม่มีบัตรจะไม่สามรถตรวจสอบข้อมูลท่านได้</small></div>
-  </div>
-</div>
-
-<footer>
-  <div class="footer-inner">
-    <div><img src="mgmu.png" style="height:50px" alt="logo"><br><small>MGMU<br>มหาวิทยาลัยเวชศาสตร์มหานครพิทักษ์เวช</small></div>
-    <div><h4>สำหรับนักศึกษา</h4><ul><li>ปฏิทินการศึกษา</li><li>ระบบลงทะเบียน</li><li>ตรวจสอบผลการเรียน</li><li>ทุนการศึกษา</li><li>หอพักนักศึกษา</li></ul></div>
-    <div><h4>หลักสูตร</h4><ul><li>แพทยศาสตรบัณฑิต</li><li>พยาบาลศาสตร์</li><li>เภสัชศาสตร์</li><li>สาธารณสุขศาสตร์</li><li>เทคนิคการแพทย์</li></ul></div>
-    <div><h4>สมัครรับข่าวสาร</h4><small>รับข่าวสารและกิจกรรมจาก MGMU</small><input placeholder="อีเมลของคุณ" style="width:100%;padding:8px;border-radius:4px;border:none;margin-top:6px"><button style="margin-top:8px;background:var(--gold);border:none;padding:8px 16px;border-radius:20px;font-weight:700;width:100%">สมัครรับข่าวสาร</button></div>
-  </div>
-  <div class="copy"><span>© 2026 MGMU สงวนลิขสิทธิ์</span><span>นโยบายความเป็นส่วนตัว | แผนผังเว็บไซต์</span></div>
-</footer>
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-const firebaseConfig = {
-  apiKey: "AIzaSyCg8IN6QUb4O3TAk-kGkoiefxGsezw1dPE",
-  authDomain: "mgmu-7ac39.firebaseapp.com",
-  projectId: "mgmu-7ac39",
-  storageBucket: "mgmu-7ac39.firebasestorage.app",
-  messagingSenderId: "371565700622",
-  appId: "1:371565700622:web:382d7a4a695daa2b1dfe5f"
-};
-let db, useFirebase=false;
-try{
-  if(firebaseConfig.apiKey!=="YOUR_API_KEY"){
-    const app=initializeApp(firebaseConfig);
-    db=getFirestore(app);
-    useFirebase=true;
-    document.getElementById('status').textContent='✅ ต่อ Firebase แล้ว - ค้นหา Real-time ทุกคนเห็นพร้อมกัน';
-  } else {
-    document.getElementById('status').textContent='ระบบตรวจข้อมูลนักศึกษา';
-  }
-}catch(e){}
-
-window.searchStudent = async ()=>{
-  const id=document.getElementById('studentIdInput').value.trim();
-  const res=document.getElementById('result');
-  if(!id){ res.className='result err'; res.innerHTML='กรุณากรอกรหัสนักศึกษาก่อน'; return; }
-  res.className='result'; res.style.display='block'; res.innerHTML='⏳ กำลังค้นหา...';
-  let found=null;
-  if(useFirebase){
-    try{
-      const q=query(collection(db,"students"), where("studentId","==",id));
-      const snap=await getDocs(q);
-      if(!snap.empty){ found=snap.docs[0].data(); }
-    }catch(e){ console.error(e); }
-  } else {
-    const list=JSON.parse(localStorage.getItem('mgmu_students')||'[]');
-    found=list.find(s=>s.studentId===id);
-  }
-  if(found){
-    res.className='result ok';
-    res.innerHTML=`
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-        <b style="font-size:18px;color:#0d1b36">✅ พบข้อมูลนักศึกษา</b>
-        <span style="background:${found.status==='ปกติ'?'#dcfce7':'#fef9c3'};color:${found.status==='ปกติ'?'#166534':'#854d0e'};padding:4px 10px;border-radius:20px;font-size:12px;font-weight:700">${found.status||'ปกติ'}</span>
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="logo-wrap">
+        <img src="mgmu.png" alt="MGMU Logo" />
+        <div class="logo-text">
+          <strong>MGMU</strong>
+          <span>METROPOLITAN GUARDIAN MEDICAL UNIVERSITY</span>
+        </div>
       </div>
-      <table class="info">
-        <tr><td>รหัสนักศึกษา:</td><td style="font-weight:700">${found.studentId}</td></tr>
-        <tr><td>ชื่อ–นามสกุล:</td><td style="font-weight:700">${found.fullName}</td></tr>
-        <tr><td>คณะ:</td><td>${found.faculty}</td></tr>
-        <tr><td>ชั้นปี:</td><td>${found.year}</td></tr>
-        <tr><td>สถานะนักศึกษา:</td><td><b>${found.status}</b></td></tr>
-      </table>
-    `;
-  } else {
-    res.className='result err';
-    res.innerHTML=`❌ ไม่พบรหัสนักศึกษา <b>${id}</b> ในระบบ<br><small style="opacity:.7">กรุณาตรวจสอบรหัสอีกครั้ง หรือติดต่อแอดมินให้เพิ่มข้อมูลใน Firebase</small>`;
-  }
-};
-document.getElementById('studentIdInput').addEventListener('keypress', e=>{ if(e.key==='Enter') searchStudent(); });
-const user = localStorage.getItem('mgmu_user');
-if(user==='admin'){
-  const btn=document.getElementById('loginBtn');
-  if(btn){ btn.textContent='แดชบอร์ดแอดมิน (LIVE)'; btn.href='dashboard.html'; }
-}
-</script>
+      <nav class="nav">
+        <a href="index.html">หน้าแรก</a>
+        <a href="about.html">เกี่ยวกับมหาวิทยาลัย</a>
+        <a href="faculty.html">คณะวิชา</a>
+        <a href="admission.html">รับสมัคร</a>
+        <a href="students.html">นักศึกษา</a>
+        <a href="research.html">งานวิจัย</a>
+        <a href="contact.html">ติดต่อเรา</a>
+      </nav>
+      <a class="btn-gold" href="login.html">เข้าสู่ระบบ</a>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <div class="page-head">
+    <div class="page-head-inner">
+      <h1>ตรวจสอบรายชื่อ</h1>
+      <p>CHECK ELIGIBILITY</p>
+    </div>
+  </div>
+
+  <main class="content">
+    <!-- แก้....ตรงนี้นะ -->
+    <div class="card">
+      <h2>ตรวจสอบรายชื่อนักศึกษา</h2>
+      <p class="sub">กรอกเลขบัตรนักศึกษา</p>
+      <div class="form">
+        <input id="idCard" maxlength="13" placeholder="1100701234567" />
+        <button onclick="checkStudent()">ค้นหา</button>
+      </div>
+      <div id="result"></div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <img src="mgmu.png" style="height:50px" alt="logo" /><br />
+        <strong>MGMU</strong><br />
+        <small>มหาวิทยาลัยเวชศาสตร์<br />มหานครพิทักษ์เวช</small>
+      </div>
+      <div>
+        <h4>สำหรับนักศึกษา</h4>
+        <ul>
+          <li>ปฏิทินการศึกษา</li>
+          <li>ระบบลงทะเบียน</li>
+          <li>ตรวจสอบผลการเรียน</li>
+          <li>ทุนการศึกษา</li>
+          <li>หอพักนักศึกษา</li>
+        </ul>
+      </div>
+      <div>
+        <h4>หลักสูตร</h4>
+        <ul>
+          <li>แพทยศาสตรบัณฑิต</li>
+          <li>พยาบาลศาสตร์</li>
+          <li>เภสัชศาสตร์</li>
+          <li>สาธารณสุขศาสตร์</li>
+          <li>เทคนิคการแพทย์</li>
+        </ul>
+      </div>
+      <div>
+        <h4>สมัครรับข่าวสาร</h4>
+        <small>รับข่าวสารและกิจกรรมจาก MGMU</small>
+        <input placeholder="อีเมลของคุณ" />
+        <button class="footer-btn">สมัครรับข่าวสาร</button>
+      </div>
+    </div>
+    <div class="copy">
+      <span>© 2026 MGMU สงวนลิขสิทธิ์</span>
+      <span>นโยบายความเป็นส่วนตัว | แผนผังเว็บไซต์</span>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+    const firebaseConfig = {
+      apiKey: "AIzaSyCg8IN6QUb4O3TAk-kGkoiefxGsezw1dPE",
+      authDomain: "mgmu-7ac39.firebaseapp.com",
+      projectId: "mgmu-7ac39",
+      storageBucket: "mgmu-7ac39.firebasestorage.app",
+      messagingSenderId: "371565700622",
+      appId: "1:371565700622:web:382d7a4a695daa2b1dfe5f"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    window.checkStudent = async function(){
+      const id = document.getElementById("idCard").value.trim();
+      const el = document.getElementById("result");
+      if(!/^\d{13}$/.test(id)){ el.className="no"; el.innerText="❌ กรอกเลข 13 หลัก"; return; }
+      el.className="wait"; el.innerText="⏳ กำลังค้นหา...";
+      try{
+        const snap = await getDoc(doc(db,"students",id));
+        if(snap.exists()){
+          const d=snap.data();
+          el.className="ok"; el.innerHTML=`✅ พบ: <b>${d.name}</b> - ${d.status}`;
+        }else{
+          el.className="no"; el.innerText=`❌ ไม่พบ ${id}`;
+        }
+      }catch(e){ el.className="no"; el.innerText="Error: "+e.message; }
+    }
+  </script>
+
 </body>
 </html>
