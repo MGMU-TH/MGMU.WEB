@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เกี่ยวกับมหาวิทยาลัย | MGMU</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;700&family=Noto+Serif+Thai:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0d1b36;--navy2:#101f3f;--gold:#c9a86a;--gold2:#e9c77a;--light:#f4f6f9;}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:"Sarabun",sans-serif;background:#fff;color:#222;line-height:1.7}a{text-decoration:none;color:inherit}
+.topbar{background:var(--navy);color:#fff;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.2)}
+.topbar-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 24px}
+.logo-wrap{display:flex;align-items:center;gap:12px}
+.logo-wrap img{height:54px;width:auto;object-fit:contain}
+.logo-text strong{font-family:"Noto Serif Thai",serif;font-size:18px;letter-spacing:1px;display:block}
+.logo-text span{font-size:11px;opacity:.8;display:block;margin-top:-4px}
+.nav{display:flex;gap:22px;font-size:14px;align-items:center}
+.nav a{opacity:.9;padding:4px 0;border-bottom:2px solid transparent;transition:.2s}
+.nav a:hover,.nav a.active{border-bottom:2px solid var(--gold);color:var(--gold2);opacity:1}
+.btn-gold{background:var(--gold);color:var(--navy);padding:6px 16px;border-radius:20px;font-weight:700;font-size:13px}
+.hero-about{position:relative;height:380px;background:var(--navy);overflow:hidden;display:flex;align-items:center}
+.hero-about img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.35}
+.hero-about-overlay{position:absolute;inset:0;background:linear-gradient(90deg,#0d1b36 0%,#0d1b36cc 60%,transparent)}
+.hero-about-content{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:40px 24px;color:#fff;width:100%}
+.page-wrap{max-width:1080px;margin:0 auto;padding:32px 24px}
+.founder-card{display:grid;grid-template-columns:340px 1fr;gap:32px;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:24px;box-shadow:0 10px 30px rgba(13,27,54,.08);margin-top:-80px;position:relative;z-index:3}
+.founder-img{width:100%;height:420px;object-fit:cover;border-radius:12px;background:linear-gradient(135deg,#0d1b36,#1e3a5f)}
+.badge{display:inline-block;background:var(--gold);color:var(--navy);padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:8px}
+.timeline{border-left:2px solid var(--gold);padding-left:20px;margin-left:8px}
+.timeline-item{position:relative;margin-bottom:20px}
+.timeline-item:before{content:'';position:absolute;left:-27px;top:4px;width:12px;height:12px;background:var(--gold);border-radius:50%;border:2px solid #fff}
+footer{background:var(--navy);color:#fff;padding:32px 24px 16px;margin-top:60px}
+.footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.2fr 0.6fr 0.6fr 0.8fr;gap:24px}
+footer h4{color:var(--gold2);margin-bottom:8px;font-size:14px}
+footer small,footer li{font-size:13px;opacity:.8;list-style:none;margin-bottom:6px}
+.copy{border-top:1px solid #ffffff14;margin-top:24px;padding-top:12px;display:flex;justify-content:space-between;font-size:12px;opacity:.6;max-width:1280px;margin-left:auto;margin-right:auto}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="logo-wrap" href="index.html">
+      <img src="mgmu.png" alt="MGMU" />
+      <div class="logo-text"><strong>MGMU</strong><span>METROPOLITAN GUARDIAN MEDICAL UNIVERSITY</span></div>
+    </a>
+    <nav class="nav">
+      <a href="index.html">หน้าแรก</a>
+      <a href="faculties.html">คณะและสาขาวิชา</a>
+      <a href="executives.html">ทำเนียบผู้บริหาร</a>
+      <a href="students.html">นักศึกษา</a>
+      <a href="research.html">งานวิจัย</a>
+      <a href="contact.html">ติดต่อเรา</a>
+    </nav>
+    <a class="btn-gold" href="login.html">เข้าสู่ระบบ</a>
+  </div>
+</header>
+
+<section class="hero-about">
+  <img src="mgmu_t.jpg" alt="MGMU Building" onerror="this.src='mgmu_tow.png'">
+  <div class="hero-about-overlay"></div>
+  <div class="hero-about-content">
+    <span class="badge">ABOUT MGMU</span>
+    <h1 style="font-size:36px;line-height:1.2;font-weight:700">เกี่ยวกับมหาวิทยาลัย</h1>
+    <p style="opacity:.8;margin-top:8px;max-width:500px">มหาวิทยาลัยเวชศาสตร์ มหานครพิทักษ์เวช - สถาบันการแพทย์ที่ก่อตั้งด้วยวิสัยทัศน์อันแน่วแน่ของผู้ก่อตั้งเพียงหนึ่งเดียว</p>
+  </div>
+</section>
+
+<div class="page-wrap">
+  <div class="founder-card">
+    <div>
+      <div style="position:relative">
+        <img class="founder-img" src="images/founder-peverell.jpg" alt="Professor Dr. Albus Ignatius Peverell" onerror="this.style.display='none'; document.getElementById('founder-placeholder').style.display='grid'">
+        <div id="founder-placeholder" style="width:100%;height:420px;border-radius:12px;background:linear-gradient(135deg,#0d1b36 0%,#1e3a5f 100%);display:none;place-items:center;color:#fff;text-align:center;padding:20px">
+          <div><div style="font-size:64px;margin-bottom:12px">🎓</div><div style="font-family:'Noto Serif Thai';font-size:22px;font-weight:700">Professor Dr.<br>Albus Ignatius Peverell</div><small style="opacity:.7">ผู้ก่อตั้ง MGMU</small></div>
+        </div>
+        <div style="position:absolute;bottom:12px;left:12px;right:12px;background:rgba(13,27,54,.9);backdrop-filter:blur(6px);padding:10px 12px;border-radius:8px;color:#fff">
+          <b style="color:var(--gold2)">Professor Dr. Albus Ignatius Peverell</b><br><small>ผู้ก่อตั้งและนายกสภามหาวิทยาลัยคนแรก</small>
+        </div>
+      </div>
+    </div>
+    <div>
+      <span class="badge">FOUNDER & FIRST PRESIDENT</span>
+      <h2 style="font-family:'Noto Serif Thai';font-size:28px;color:var(--navy);line-height:1.3;margin-bottom:6px">ศาสตราจารย์ ดร. อัลบัส อิกเนเชียส เพเวอเรลล์<br><span style="font-family:'Sarabun';font-size:18px;color:var(--gold);font-weight:400">Professor Dr. Albus Ignatius Peverell</span></h2>
+      <p style="font-size:14px;color:#555;margin-bottom:16px">ผู้ก่อตั้งมหาวิทยาลัยเวชศาสตร์มหานครพิทักษ์เวช ผู้เดียว — เป็นผู้สถาปนาและดำรงตำแหน่งนายกสภามหาวิทยาลัยคนแรก</p>
+      
+      <div style="background:var(--light);padding:16px;border-radius:10px;border-left:4px solid var(--gold);margin-bottom:20px">
+        <p style="font-size:14px;font-style:italic">"สร้างบุคลากรทางการแพทย์ผู้เชี่ยวชาญ ด้วยคุณธรรม เพื่อสังคมและการก้าวสู่สากลอย่างยั่งยืน"</p>
+        <small style="opacity:.6">— ปณิธานของผู้ก่อตั้ง</small>
+      </div>
+
+      <h3 style="font-size:16px;color:var(--navy);margin-bottom:10px">ประวัติและวิสัยทัศน์</h3>
+      <p style="font-size:14px;margin-bottom:12px">มหาวิทยาลัยเวชศาสตร์ มหานครพิทักษ์เวช (MGMU) ถือกำเนิดขึ้นจากวิสัยทัศน์อันแน่วแน่ของ <b>ศาสตราจารย์ ดร. อัลบัส อิกเนเชียส เพเวอเรลล์</b> ผู้เชื่อมั่นว่าการแพทย์ที่ยิ่งใหญ่ต้องตั้งอยู่บนรากฐานของคุณธรรมและความเป็นมนุษย์</p>
+      <p style="font-size:14px;margin-bottom:20px">ท่านได้วางรากฐานให้ MGMU เป็นมากกว่ามหาวิทยาลัยแพทย์ แต่เป็นสถาบันที่พิทักษ์ชีวิตและสร้างผู้พิทักษ์แห่งมหานคร ด้วยหลักสูตรที่เข้มข้นและจรรยาบรรณที่มั่นคง</p>
+
+      <div class="timeline">
+        <div class="timeline-item"><b style="font-size:14px">สถาปนามหาวิทยาลัย</b><br><small style="opacity:.7">ก่อตั้ง MGMU โดย Professor Dr. Albus Ignatius Peverell ผู้เดียว</small></div>
+        <div class="timeline-item"><b style="font-size:14px">นายกสภามหาวิทยาลัยคนแรก</b><br><small style="opacity:.7">ดำรงตำแหน่งนายกสภา วางระบบบริหารและวิชาการทั้งหมด</small></div>
+        <div class="timeline-item"><b style="font-size:14px">วางรากฐาน 5 คณะวิชา</b><br><small style="opacity:.7">แพทย์ พยาบาล เภสัช สาธารณสุข เทคนิคการแพทย์</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:32px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+    <div style="background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:16px"><b style="color:var(--navy)">ผู้ก่อตั้งเพียงหนึ่งเดียว</b><br><small style="opacity:.7">Sole Founder - ไม่มีผู้ร่วมก่อตั้งอื่น</small></div>
+    <div style="background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:16px"><b style="color:var(--navy)">นายกสภาคนแรก</b><br><small style="opacity:.7">First President of University Council</small></div>
+    <div style="background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:16px"><b style="color:var(--navy)">มรดกและปณิธาน</b><br><small style="opacity:.7">Legacy of Guardian Medicine</small></div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div><img src="mgmu.png" style="height:50px" alt="logo"><br><small>MGMU<br>มหาวิทยาลัยเวชศาสตร์มหานครพิทักษ์เวช</small></div>
+    <div><h4>สำหรับนักศึกษา</h4><ul><li>ปฏิทินการศึกษา</li><li>ระบบลงทะเบียน</li><li>ตรวจสอบผลการเรียน</li><li>ทุนการศึกษา</li><li>หอพักนักศึกษา</li></ul></div>
+    <div><h4>หลักสูตร</h4><ul><li>แพทยศาสตรบัณฑิต</li><li>พยาบาลศาสตร์</li><li>เภสัชศาสตร์</li><li>สาธารณสุขศาสตร์</li><li>เทคนิคการแพทย์</li></ul></div>
+    <div><h4>สมัครรับข่าวสาร</h4><small>รับข่าวสารและกิจกรรมจาก MGMU</small><input placeholder="อีเมลของคุณ" style="width:100%;padding:8px;border-radius:4px;border:none;margin-top:6px"><button style="margin-top:8px;background:var(--gold);border:none;padding:8px 16px;border-radius:20px;font-weight:700;width:100%">สมัครรับข่าวสาร</button></div>
+  </div>
+  <div class="copy"><span>© 2026 MGMU สงวนลิขสิทธิ์</span><span>นโยบายความเป็นส่วนตัว | แผนผังเว็บไซต์</span></div>
+</footer>
+
+<script>
+// เช็คแอดมิน
+const user = localStorage.getItem('mgmu_user');
+if(user==='admin'){
+  const btn=document.querySelector('.btn-gold');
+  if(btn){ btn.textContent='แดชบอร์ดแอดมิน (LIVE)'; btn.href='dashboard.html'; }
+}
+</script>
+
+</body>
+</html>

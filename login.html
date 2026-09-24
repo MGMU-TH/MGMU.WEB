@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เข้าสู่ระบบ | MGMU</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;700&family=Noto+Serif+Thai:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0d1b36;--navy2:#101f3f;--gold:#c9a86a;--gold2:#e9c77a;--light:#f4f6f9;}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:"Sarabun",sans-serif;background:#f4f6f9;color:#222;line-height:1.6}a{text-decoration:none;color:inherit}
+.topbar{background:var(--navy);color:#fff;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.2)}
+.topbar-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 24px}
+.logo-wrap{display:flex;align-items:center;gap:12px}
+.logo-wrap img{height:54px;width:auto;object-fit:contain}
+.logo-text strong{font-family:"Noto Serif Thai",serif;font-size:18px;letter-spacing:1px;display:block}
+.logo-text span{font-size:11px;opacity:.8;display:block;margin-top:-4px}
+.nav{display:flex;gap:22px;font-size:14px;align-items:center}
+.nav a{opacity:.9;padding:4px 0;border-bottom:2px solid transparent;transition:.2s}
+.nav a:hover,.nav a.active{border-bottom:2px solid var(--gold);color:var(--gold2);opacity:1}
+.btn-gold{background:var(--gold);color:var(--navy);padding:6px 16px;border-radius:20px;font-weight:700;font-size:13px}
+.page-wrap{max-width:1280px;margin:0 auto;padding:32px 24px;min-height:60vh}
+footer{background:var(--navy);color:#fff;padding:32px 24px 16px;margin-top:40px}
+.footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.2fr 0.6fr 0.6fr 0.8fr;gap:24px}
+footer h4{color:var(--gold2);margin-bottom:8px;font-size:14px}
+footer small,footer li{font-size:13px;opacity:.8;list-style:none;margin-bottom:6px}
+.copy{border-top:1px solid #ffffff14;margin-top:24px;padding-top:12px;display:flex;justify-content:space-between;font-size:12px;opacity:.6;max-width:1280px;margin-left:auto;margin-right:auto}
+.login-box{max-width:420px;margin:60px auto;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:28px;box-shadow:0 10px 30px rgba(13,27,54,.1)}
+.login-box h2{text-align:center;color:var(--navy);margin-bottom:18px}
+.login-box input{width:100%;padding:11px 12px;border:1px solid #d1d5db;border-radius:8px;margin-bottom:12px;font-family:"Sarabun"}
+.login-tabs{display:flex;gap:8px;margin-bottom:16px}
+.login-tabs button{flex:1;padding:8px;border-radius:8px;border:1px solid var(--navy);background:#fff;cursor:pointer}
+.login-tabs button.active{background:var(--navy);color:#fff}
+.alert{padding:10px;border-radius:8px;font-size:13px;margin-bottom:12px;display:none}
+.alert.error{background:#fee2e2;color:#991b1b;border:1px solid #fecaca;display:block}
+.alert.success{background:#dcfce7;color:#166534;border:1px solid #bbf7d0;display:block}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="logo-wrap" href="index.html">
+      <img src="mgmu.png" alt="MGMU" />
+      <div class="logo-text"><strong>MGMU</strong><span>METROPOLITAN GUARDIAN MEDICAL UNIVERSITY</span></div>
+    </a>
+    <nav class="nav">
+      <a href="index.html">หน้าแรก</a>
+      <a href="faculties.html">คณะและสาขาวิชา</a>
+      <a href="executives.html">ทำเนียบผู้บริหาร</a>
+      <a href="students.html">นักศึกษา</a>
+      <a href="research.html">งานวิจัย</a>
+      <a href="contact.html">ติดต่อเรา</a>
+    </nav>
+    <a class="btn-gold" href="login.html">เข้าสู่ระบบ</a>
+  </div>
+</header>
+
+<div class="page-wrap">
+<h1 style="color:var(--navy);font-size:28px;margin-bottom:4px">เข้าสู่ระบบ</h1>
+
+<div class="login-box">
+<h2>เข้าสู่ระบบ MGMU</h2>
+<div class="login-tabs"><button class="active">ผู้ดูแลระบบเท่านั้น</button></div>
+
+<div id="msg" class="alert"></div>
+
+<input id="username" placeholder="ชื่อผู้ดูแลระบบ">
+<input id="password" type="password" placeholder="รหัสผ่าน">
+<div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:12px"><label><input type="checkbox" id="remember"> จดจำฉัน</label><a href="#" style="color:var(--gold)">ลืมรหัสผ่าน?</a></div>
+<button class="btn-gold" style="width:100%;border:none;cursor:pointer;padding:11px;border-radius:8px;font-size:15px" onclick="doLogin()">เข้าสู่ระบบ</button>
+
+</>
+</div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div><img src="mgmu.png" style="height:50px" alt="logo"><br><small>MGMU<br>มหาวิทยาลัยเวชศาสตร์มหานครพิทักษ์เวช</small></div>
+    <div><h4>สำหรับนักศึกษา</h4><ul><li>ปฏิทินการศึกษา</li><li>ระบบลงทะเบียน</li><li>ตรวจสอบผลการเรียน</li><li>ทุนการศึกษา</li></ul></div>
+    <div><h4>หลักสูตร</h4><ul><li>แพทยศาสตรบัณฑิต</li><li>พยาบาลศาสตร์</li><li>เภสัชศาสตร์</li><li>สาธารณสุขศาสตร์</li></ul></div>
+    <div><h4>สมัครรับข่าวสาร</h4><small>รับข่าวสารและกิจกรรมจาก MGMU</small><input placeholder="อีเมลของคุณ" style="width:100%;padding:8px;border-radius:4px;border:none;margin-top:6px"><button style="margin-top:8px;background:var(--gold);border:none;padding:8px 16px;border-radius:20px;font-weight:700;width:100%">สมัครรับข่าวสาร</button></div>
+  </div>
+  <div class="copy"><span>© 2026 MGMU สงวนลิขสิทธิ์</span><span>นโยบายความเป็นส่วนตัว | แผนผังเว็บไซต์</span></div>
+</footer>
+
+<script>
+// =========================================
+// 🔧 ตรงนี้แหละ ที่ให้แก้รหัสผ่านได้เลย
+// แก้ได้ตามใจชอบ เพิ่มกี่คนก็ได้
+// =========================================
+const USERS = {
+  // มีแค่แอดมินคนเดียวเท่านั้น - อำนาจสูงสุด
+  "admin": { password: "mgmu1234", role: "ผู้ดูแลระบบ", redirect: "dashboard.html" },
+};
+
+function doLogin(){
+  const u = document.getElementById('username').value.trim();
+  const p = document.getElementById('password').value.trim();
+  const msg = document.getElementById('msg');
+  
+  if(!u || !p){ msg.className="alert error"; msg.textContent="กรุณากรอกชื่อผู้ใช้และรหัสผ่าน"; return; }
+
+  if(USERS[u] && USERS[u].password === p){
+    msg.className="alert success";
+    msg.textContent=`เข้าสู่ระบบสำเร็จ! ยินดีต้อนรับ ${USERS[u].role} (${u}) กำลังไปหน้า ${USERS[u].redirect}`;
+    // จำลองล็อกอิน
+    localStorage.setItem('mgmu_user', u);
+    localStorage.setItem('mgmu_role', USERS[u].role);
+    setTimeout(()=>{ window.location.href = USERS[u].redirect; }, 1200);
+  } else {
+    msg.className="alert error";
+    msg.textContent="ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
+  }
+}
+
+// กด Enter เพื่อล็อกอินได้
+document.getElementById('password').addEventListener('keypress', e=>{ if(e.key==='Enter') doLogin(); });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แดชบอร์ดแอดมิน | MGMU</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0d1b36;--gold:#c9a86a;--gold2:#e9c77a}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:"Sarabun",sans-serif;background:#f4f6f9;display:flex;min-height:100vh}
+.sidebar{width:260px;background:var(--navy);color:#fff;padding:20px;position:sticky;top:0;height:100vh;overflow:auto}
+.sidebar h2{color:var(--gold2);margin-bottom:10px}
+.menu a{display:block;padding:10px 12px;border-radius:8px;margin-bottom:6px;color:#cbd5e1;font-size:14px}
+.menu a.active,.menu a:hover{background:#ffffff14;color:#fff}
+.main{flex:1;padding:24px;overflow:auto}
+.card{background:#fff;border-radius:12px;padding:20px;border:1px solid #e5e7eb;margin-bottom:16px}
+.btn{background:var(--navy);color:#fff;padding:8px 14px;border-radius:8px;border:none;cursor:pointer}
+.btn-gold{background:var(--gold);color:var(--navy);font-weight:700;padding:8px 14px;border-radius:8px;border:none;cursor:pointer}
+input,textarea,select{width:100%;padding:10px;border:1px solid #d1d5db;border-radius:8px;margin-bottom:10px;font-family:"Sarabun"}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.status{padding:8px 12px;border-radius:8px;font-size:12px;margin-bottom:12px}
+.status.ok{background:#dcfce7;color:#166534}
+.status.warn{background:#fef9c3;color:#854d0e}
+.realtime-dot{width:10px;height:10px;background:#22c55e;border-radius:50%;display:inline-block;animation:pulse 2s infinite}
+@keyframes pulse{0%{opacity:1}50%{opacity:.4}100%{opacity:1}}
+</style>
+</head>
+<body>
+<script>
+if(localStorage.getItem('mgmu_user')!=='admin'){ location.href='login.html'; }
+function logout(){ localStorage.clear(); location.href='login.html'; }
+</script>
+
+<div class="sidebar">
+  <h2>MGMU ADMIN</h2>
+  <div style="display:flex;align-items:center;gap:6px;margin-bottom:16px"><span class="realtime-dot"></span><small style="font-size:11px">REAL-TIME ONLINE</small></div>
+  <div class="menu">
+    <a class="active" href="#">📊 ภาพรวม</a>
+    <a href="#students-mgmt">🎓 รายชื่อนักศึกษา (เปลี่ยนบ่อย)</a>
+    <a href="#news">📰 ข่าวสาร (เปลี่ยนบ่อย)</a>
+    <a href="index.html">🌐 ดูหน้าเว็บจริง</a>
+    <a href="#" onclick="logout()" style="margin-top:20px;color:#f87171">🚪 ออกจากระบบ</a>
+  </div>
+  <div style="margin-top:20px;background:#ffffff0f;padding:10px;border-radius:8px;font-size:11px">
+  <b>Firebase ใช้แค่ 2 อย่าง:</b><br>
+  • students<br>
+  • news<br>
+  ที่เหลือ Static ไม่เปลือง Read
+  </div>
+</div>
+
+<div class="main">
+  <h1>แดชบอร์ด - 2 ระบบที่เปลี่ยนบ่อย <span style="background:#22c55e;color:#fff;padding:2px 8px;border-radius:20px;font-size:12px">LIVE</span></h1>
+  <p style="font-size:13px;opacity:.7;margin-bottom:16px">ตามที่คุณบอก: มีแค่ รายชื่อนักศึกษากับข่าวสาร ที่ต้องเปลี่ยนแปลงบ่อย - ที่เหลือ Static</p>
+
+  <div class="grid">
+    <div class="card"><b id="count-students">-</b><br>นักศึกษาในระบบ</div>
+    <div class="card"><b id="count-news">-</b><br>ข่าวทั้งหมด</div>
+    <div class="card"><b>Static</b><br><small style="color:#16a34a">ผู้บริหาร 2 คน (ไม่ใช้ Firebase)</small></div>
+  </div>
+
+  <div class="card" id="students-mgmt" style="border:2px solid var(--gold)">
+    <h3>🎓 จัดการรายชื่อนักศึกษา - Firebase (เปลี่ยนบ่อย)</h3>
+    <div id="firebase-status" class="status warn">ยังไม่ได้ต่อ Firebase - โหมดจำลอง</div>
+    <p style="font-size:12px;opacity:.7;margin-bottom:12px">5 ฟิลด์: รหัสนักศึกษา / ชื่อ–นามสกุล / คณะ / ชั้นปี / สถานะนักศึกษา</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <input id="stu-id" placeholder="รหัสนักศึกษา: เช่น 65001">
+      <input id="stu-name" placeholder="ชื่อ–นามสกุล: เช่น นายสมชาย ใจดี">
+      <input id="stu-faculty" placeholder="คณะ: เช่น แพทยศาสตร์" list="fac-list">
+      <datalist id="fac-list"><option value="แพทยศาสตร์"><option value="พยาบาลศาสตร์"><option value="เภสัชศาสตร์"><option value="สาธารณสุขศาสตร์"><option value="เทคนิคการแพทย์"></datalist>
+      <input id="stu-year" placeholder="ชั้นปี: เช่น ปี 1, ปี 2">
+      <select id="stu-status"><option value="ปกติ">สถานะ: ปกติ</option><option value="พ้นสภาพ">พ้นสภาพ</option><option value="ลาพัก">ลาพักการศึกษา</option><option value="จบการศึกษา">จบการศึกษา</option><option value="รอตรวจสอบ">รอตรวจสอบ</option></select>
+    </div>
+    <button class="btn-gold" onclick="addStudent()">+ เพิ่มนักศึกษา (ทุกคนค้นหาเจอทันที)</button>
+    <div id="student-list" style="margin-top:16px"></div>
+  </div>
+
+  <div class="card" id="news">
+    <h3>📰 จัดการข่าวสาร - Firebase (เปลี่ยนบ่อย)</h3>
+    <input id="news-title" placeholder="หัวข้อข่าวใหม่">
+    <textarea id="news-desc" placeholder="รายละเอียดข่าว"></textarea>
+    <input id="news-img" type="file" accept="image/*">
+    <button class="btn-gold" onclick="addNews()">+ เพิ่มข่าว</button>
+    <div id="news-list" style="margin-top:16px"></div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCg8IN6QUb4O3TAk-kGkoiefxGsezw1dPE",
+  authDomain: "mgmu-7ac39.firebaseapp.com",
+  projectId: "mgmu-7ac39",
+  storageBucket: "mgmu-7ac39.firebasestorage.app",
+  messagingSenderId: "371565700622",
+  appId: "1:371565700622:web:382d7a4a695daa2b1dfe5f"
+};
+
+let db, storage, useFirebase = false;
+try{
+  const app = initializeApp(firebaseConfig);
+  if(firebaseConfig.apiKey!=="YOUR_API_KEY"){
+    db = getFirestore(app);
+    storage = getStorage(app);
+    useFirebase = true;
+    document.getElementById('firebase-status').className='status ok';
+    document.getElementById('firebase-status').textContent='✅ ต่อ Firebase แล้ว - 2 ระบบ Real-time ทำงาน';
+    initRealtime();
+  }
+}catch(e){ console.log("Firebase not configured"); }
+
+function initRealtime(){
+  onSnapshot(query(collection(db, "students"), orderBy("createdAt","desc")), (snap)=>{
+    document.getElementById('count-students').textContent=snap.size;
+    document.getElementById('student-list').innerHTML=snap.docs.map(d=>{
+      const s=d.data();
+      return `<div style="display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #eee;font-size:13px"><span><b>${s.studentId}</b> - ${s.fullName} (${s.faculty} ${s.year}) <small style="background:#eef;padding:2px 6px;border-radius:10px">${s.status}</small></span><button onclick="delStudent('${d.id}')" style="color:red;border:none;background:none;cursor:pointer">ลบ</button></div>`;
+    }).join('');
+  });
+  onSnapshot(query(collection(db, "news"), orderBy("createdAt","desc")), (snap)=>{
+    document.getElementById('count-news').textContent=snap.size;
+    document.getElementById('news-list').innerHTML=snap.docs.map(d=>{
+      const data=d.data();
+      return `<div style="display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #eee"><span><b>${data.title}</b><br><small>${data.desc||''}</small></span><button onclick="delNews('${d.id}')" style="color:red;border:none;background:none;cursor:pointer">ลบ</button></div>`;
+    }).join('');
+  });
+}
+
+window.addStudent = async ()=>{
+  const studentId=document.getElementById('stu-id').value.trim();
+  const fullName=document.getElementById('stu-name').value.trim();
+  const faculty=document.getElementById('stu-faculty').value.trim();
+  const year=document.getElementById('stu-year').value.trim();
+  const status=document.getElementById('stu-status').value;
+  if(!studentId||!fullName) return alert('ใส่รหัสนักศึกษาและชื่อ–นามสกุลก่อน');
+  if(!useFirebase){
+    const list=JSON.parse(localStorage.getItem('mgmu_students')||'[]');
+    if(list.find(x=>x.studentId===studentId)) return alert('รหัสนักศึกษานี้มีแล้ว');
+    list.unshift({id:Date.now(), studentId, fullName, faculty, year, status});
+    localStorage.setItem('mgmu_students', JSON.stringify(list));
+    renderMocks(); return;
+  }
+  await addDoc(collection(db,"students"),{studentId, fullName, faculty, year, status, createdAt:serverTimestamp()});
+  document.getElementById('stu-id').value=''; document.getElementById('stu-name').value='';
+};
+
+window.addNews = async ()=>{
+  const title=document.getElementById('news-title').value.trim();
+  const desc=document.getElementById('news-desc').value.trim();
+  const file=document.getElementById('news-img').files[0];
+  if(!title) return alert('ใส่หัวข้อก่อน');
+  if(!useFirebase){
+    const list=JSON.parse(localStorage.getItem('mgmu_news')||'[]');
+    list.unshift({id:Date.now(), title, desc});
+    localStorage.setItem('mgmu_news', JSON.stringify(list));
+    renderMocks(); return;
+  }
+  let imgUrl="";
+  if(file){ const r=ref(storage, 'news/'+Date.now()+'_'+file.name); await uploadBytes(r,file); imgUrl=await getDownloadURL(r); }
+  await addDoc(collection(db,"news"),{title,desc,imgUrl,createdAt:serverTimestamp()});
+};
+
+window.delStudent = async (id)=>{
+  if(!useFirebase){ let l=JSON.parse(localStorage.getItem('mgmu_students')||'[]'); l=l.filter(x=>String(x.id)!==String(id)); localStorage.setItem('mgmu_students',JSON.stringify(l)); renderMocks(); return;}
+  if(confirm('ลบนักศึกษาคนนี้?')) await deleteDoc(doc(db,"students",id));
+};
+window.delNews = async (id)=>{
+  if(!useFirebase){ let l=JSON.parse(localStorage.getItem('mgmu_news')||'[]'); l=l.filter(x=>String(x.id)!==String(id)); localStorage.setItem('mgmu_news',JSON.stringify(l)); renderMocks(); return;}
+  if(confirm('ลบข่าวนี้?')) await deleteDoc(doc(db,"news",id));
+};
+
+function renderMocks(){
+  const students=JSON.parse(localStorage.getItem('mgmu_students')||'[]');
+  document.getElementById('count-students').textContent=students.length;
+  document.getElementById('student-list').innerHTML=students.map(s=>`<div style="padding:8px;border-bottom:1px solid #eee;font-size:13px"><b>${s.studentId}</b> - ${s.fullName} <button onclick="delStudent(${s.id})" style="color:red;border:none;background:none;float:right">ลบ</button></div>`).join('');
+  const news=JSON.parse(localStorage.getItem('mgmu_news')||'[]');
+  document.getElementById('count-news').textContent=news.length;
+  document.getElementById('news-list').innerHTML=news.map(n=>`<div style="padding:8px;border-bottom:1px solid #eee"><b>${n.title}</b> <button onclick="delNews(${n.id})" style="color:red;border:none;background:none;float:right">ลบ</button></div>`).join('');
+}
+if(!useFirebase) renderMocks();
+</script>
+</body>
+</html>
