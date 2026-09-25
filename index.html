@@ -10,48 +10,52 @@
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:"Sarabun",sans-serif;background:#fff;color:#222;line-height:1.6}
     a{text-decoration:none;color:inherit}
-    .topbar{background:var(--navy);color:#fff;position:sticky;top:0;z-index:50}
-    .topbar-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 24px}
-    .logo-wrap{display:flex;align-items:center;gap:12px}
-    .logo-wrap img{height:54px;width:auto;object-fit:contain}
-    .logo-wrap .logo-text strong{font-family:"Noto Serif Thai",serif;font-size:18px;letter-spacing:1px}
-    .logo-wrap .logo-text span{font-size:11px;opacity:.8;display:block;margin-top:-4px}
-    .nav{display:flex;gap:22px;font-size:14px}
-    .nav a{opacity:1;object-position:center}
-    .nav a.active{border-bottom:2px solid var(--gold);color:var(--gold2)}
-    .btn-gold{background:var(--gold);color:var(--navy);padding:6px 16px;border-radius:20px;font-weight:700;font-size:13px}
-    .hero{position:relative;height:480px;background:var(--navy);overflow:hidden}
-    .hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1;object-position:center}
-    .hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,#0d1b36 0%,#0d1b36c4 35%,transparent 70%)}
-    .hero-content{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:80px 24px;color:#fff}
-    .hero-content h1{font-size:32px;line-height:1.2;font-weight:700}
-    .hero-content h2{font-size:14px;letter-spacing:2px;color:var(--gold2);margin:6px 0 14px}
-    .hero-content p{font-size:14px;max-width:380px;opacity:.85;margin-bottom:20px}
-    .hero-btns{display:flex;gap:12px}
-    .btn-primary{background:var(--gold);color:#0d1b36;padding:10px 22px;border-radius:6px;font-weight:700;font-size:14px}
-    .btn-outline{border:1px solid #ffffff66;color:#fff;padding:10px 22px;border-radius:6px;font-size:14px}
-    .quickbar{background:#0a1930;border-top:1px solid #ffffff14;border-bottom:1px solid #ffffff14}
-    .quickbar-inner{max-width:1280px;margin:0 auto;display:flex;justify-content:space-around;padding:14px 0;flex-wrap:wrap;gap:10px}
-    .q-item{display:flex;align-items:center;gap:10px;color:#fff;font-size:13px}
-    .q-item i{width:28px;height:28px;background:#ffffff12;border-radius:6px;display:grid;place-items:center;color:var(--gold2)}
-    .main{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.2fr 1.2fr 0.8fr 0.7fr;gap:24px;padding:24px}
-    .col-title{display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:14px;margin-bottom:12px;border-bottom:2px solid var(--navy);padding-bottom:6px}
-    .col-title a{font-size:12px;color:var(--gold)}
-    .card-dean{display:flex;gap:10px;align-items:center;border:1px solid #e6e6e6;padding:8px 10px;border-radius:6px;margin-bottom:10px}
-    .card-dean img{width:40px;height:40px;border-radius:50%;object-fit:cover}
-    .news-item{display:flex;gap:10px;margin-bottom:12px}
-    .news-item img{width:86px;height:60px;object-fit:cover;border-radius:4px}
-    .news-item b{font-size:13px;display:block;line-height:1.3}
-    .news-item span{font-size:12px;opacity:.7;display:block}
-    .event-row{display:flex;gap:10px;margin-bottom:12px}
-    .event-date{width:40px;height:40px;background:#f4f6f9;border-radius:6px;display:grid;place-items:center;font-size:11px;text-align:center;line-height:1}
-    .link-list{list-style:none}.link-list li{margin-bottom:10px;font-size:13px}
+   .topbar{background:var(--navy);color:#fff;position:sticky;top:0;z-index:50}
+   .topbar-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 24px}
+   .logo-wrap{display:flex;align-items:center;gap:12px}
+   .logo-wrap img{height:54px;width:auto;object-fit:contain}
+   .logo-wrap.logo-text strong{font-family:"Noto Serif Thai",serif;font-size:18px;letter-spacing:1px}
+   .logo-wrap.logo-text span{font-size:11px;opacity:.8;display:block;margin-top:-4px}
+   .nav{display:flex;gap:22px;font-size:14px}
+   .nav a{opacity:1;object-position:center}
+   .nav a.active{border-bottom:2px solid var(--gold);color:var(--gold2)}
+   .btn-gold{background:var(--gold);color:var(--navy);padding:6px 16px;border-radius:20px;font-weight:700;font-size:13px}
+   .hero{position:relative;height:480px;background:var(--navy);overflow:hidden}
+   .hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;object-position:center;transition:opacity.8s ease,transform 6s ease;transform:scale(1)}
+   .hero-bg.active{opacity:1;transform:scale(1.05)}
+   .hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,#0d1b36 0%,#0d1b36c4 35%,transparent 70%);z-index:1}
+   .hero-content{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:80px 24px;color:#fff}
+   .hero-content h1{font-size:32px;line-height:1.2;font-weight:700}
+   .hero-content h2{font-size:14px;letter-spacing:2px;color:var(--gold2);margin:6px 0 14px}
+   .hero-content p{font-size:14px;max-width:380px;opacity:.85;margin-bottom:20px}
+   .hero-btns{display:flex;gap:12px}
+   .btn-primary{background:var(--gold);color:#0d1b36;padding:10px 22px;border-radius:6px;font-weight:700;font-size:14px}
+   .btn-outline{border:1px solid #ffffff66;color:#fff;padding:10px 22px;border-radius:6px;font-size:14px}
+   .hero-dots{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);z-index:3;display:flex;gap:8px}
+   .hero-dots button{width:32px;height:4px;border-radius:2px;border:none;background:#ffffff66;cursor:pointer;transition:.3s}
+   .hero-dots button.active{background:var(--gold2);width:48px}
+   .quickbar{background:#0a1930;border-top:1px solid #ffffff14;border-bottom:1px solid #ffffff14}
+   .quickbar-inner{max-width:1280px;margin:0 auto;display:flex;justify-content:space-around;padding:14px 0;flex-wrap:wrap;gap:10px}
+   .q-item{display:flex;align-items:center;gap:10px;color:#fff;font-size:13px}
+   .q-item i{width:28px;height:28px;background:#ffffff12;border-radius:6px;display:grid;place-items:center;color:var(--gold2)}
+   .main{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.2fr 1.2fr 0.8fr 0.7fr;gap:24px;padding:24px}
+   .col-title{display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:14px;margin-bottom:12px;border-bottom:2px solid var(--navy);padding-bottom:6px}
+   .col-title a{font-size:12px;color:var(--gold)}
+   .card-dean{display:flex;gap:10px;align-items:center;border:1px solid #e6e6e6;padding:8px 10px;border-radius:6px;margin-bottom:10px}
+   .card-dean img{width:40px;height:40px;border-radius:50%;object-fit:cover}
+   .news-item{display:flex;gap:10px;margin-bottom:12px}
+   .news-item img{width:86px;height:60px;object-fit:cover;border-radius:4px}
+   .news-item b{font-size:13px;display:block;line-height:1.3}
+   .news-item span{font-size:12px;opacity:.7;display:block}
+   .event-row{display:flex;gap:10px;margin-bottom:12px}
+   .event-date{width:40px;height:40px;background:#f4f6f9;border-radius:6px;display:grid;place-items:center;font-size:11px;text-align:center;line-height:1}
+   .link-list{list-style:none}.link-list li{margin-bottom:10px;font-size:13px}
     footer{background:var(--navy);color:#fff;padding:32px 24px 16px;margin-top:60px}
-    .footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.2fr 0.6fr 0.6fr 0.8fr;gap:24px}
-    .footer-inner h4{color:var(--gold2);font-size:14px;margin-bottom:8px}
-    .footer-inner ul{list-style:none}.footer-inner li{font-size:13px;opacity:.8;margin-bottom:6px}
-    .footer-inner small{font-size:13px;opacity:.8}
-    .copy{border-top:1px solid #ffffff14;margin-top:24px;padding-top:12px;display:flex;justify-content:space-between;font-size:12px;opacity:.6;max-width:1280px;margin-left:auto;margin-right:auto}
+   .footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.2fr 0.6fr 0.6fr 0.8fr;gap:24px}
+   .footer-inner h4{color:var(--gold2);font-size:14px;margin-bottom:8px}
+   .footer-inner ul{list-style:none}.footer-inner li{font-size:13px;opacity:.8;margin-bottom:6px}
+   .footer-inner small{font-size:13px;opacity:.8}
+   .copy{border-top:1px solid #ffffff14;margin-top:24px;padding-top:12px;display:flex;justify-content:space-between;font-size:12px;opacity:.6;max-width:1280px;margin-left:auto;margin-right:auto}
   </style>
 </head>
 <body>
@@ -75,13 +79,18 @@
   </header>
 
   <section class="hero" id="home">
-    <img class="hero-bg" src="mgmu_tow.png" alt="MGMU Building" />
+    <img class="hero-bg active" src="mgmu_tow.png" alt="MGMU Building" id="slide0" onerror="this.src='mgmu.png'">
+    <img class="hero-bg" src="mgmu02.png" alt="MGMU Building 2" id="slide1" onerror="this.src='mgmu_tow.png'">
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <h1>มหาวิทยาลัยเวชศาสตร์<br />มหานครพิทักษ์เวช</h1>
       <h2>METROPOLITAN GUARDIAN MEDICAL UNIVERSITY</h2>
       <p>สร้างบุคลากรทางการแพทย์ผู้เชี่ยวชาญ ด้วยคุณธรรม<br />เพื่อสังคมและการก้าวสู่สากลอย่างยั่งยืน</p>
       <div class="hero-btns"><a class="btn-primary" href="admission.html">สมัครเรียนตอนนี้</a><a class="btn-outline" href="about.html">ข้อมูลเพิ่มเติม</a></div>
+    </div>
+    <div class="hero-dots">
+      <button class="active" onclick="goSlide(0)"></button>
+      <button onclick="goSlide(1)"></button>
     </div>
   </section>
 
@@ -131,6 +140,26 @@
     </div>
     <div class="copy"><span>© 2026 MGMU สงวนลิขสิทธิ์</span><span>นโยบายความเป็นส่วนตัว | แผนผังเว็บไซต์</span></div>
   </footer>
+
+<script>
+let cur=0;
+const slides=[document.getElementById('slide0'),document.getElementById('slide1')];
+const dots=document.querySelectorAll('.hero-dots button');
+function goSlide(n){
+  slides[cur].classList.remove('active');
+  dots[cur].classList.remove('active');
+  cur=n;
+  slides[cur].classList.add('active');
+  dots[cur].classList.add('active');
+}
+setInterval(()=>{ goSlide(cur===0?1:0); },5000);
+let startX=0;
+const hero=document.getElementById('home');
+hero.addEventListener('touchstart',e=>startX=e.touches[0].clientX);
+hero.addEventListener('touchend',e=>{ let d=e.changedTouches[0].clientX-startX; if(Math.abs(d)>50) goSlide(cur===0?1:0); });
+hero.addEventListener('mousedown',e=>startX=e.clientX);
+hero.addEventListener('mouseup',e=>{ let d=e.clientX-startX; if(Math.abs(d)>80) goSlide(cur===0?1:0); });
+</script>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
