@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ข่าวสาร - MGMU</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;700&family=Noto+Serif+Thai:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--navy:#0d1b36;--gold:#c9a86a;--gold2:#e9c77a}*{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:"Sarabun",sans-serif;background:#fff;color:#222;line-height:1.6}a{text-decoration:none;color:inherit}
+    .topbar{background:var(--navy);color:#fff;position:sticky;top:0;z-index:50}.topbar-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 24px}
+    .logo-wrap{display:flex;align-items:center;gap:12px}.logo-wrap img{height:54px;object-fit:contain}.logo-wrap .logo-text strong{font-family:"Noto Serif Thai",serif;font-size:18px;letter-spacing:1px}.logo-wrap .logo-text span{font-size:11px;opacity:.8;display:block;margin-top:-4px}
+    .nav{display:flex;gap:22px;font-size:14px}.nav a.active{border-bottom:2px solid var(--gold);color:var(--gold2)}.btn-gold{background:var(--gold);color:var(--navy);padding:6px 16px;border-radius:20px;font-weight:700;font-size:13px}
+    .main{max-width:1280px;margin:0 auto;padding:24px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .news-card{border:1px solid #e6e6e6;border-radius:10px;overflow:hidden}.news-card img{width:100%;height:200px;object-fit:cover}.news-card .c{padding:12px}
+    footer{background:var(--navy);color:#fff;padding:32px 24px 16px;margin-top:60px}.footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.2fr .6fr .6fr .8fr;gap:24px}.footer-inner h4{color:var(--gold2);font-size:14px;margin-bottom:8px}.footer-inner ul{list-style:none}.footer-inner li{font-size:13px;opacity:.8;margin-bottom:6px}.copy{border-top:1px solid #ffffff14;margin-top:24px;padding-top:12px;display:flex;justify-content:space-between;font-size:12px;opacity:.6;max-width:1280px;margin:auto}
+  </style>
+</head>
+<body>
+<header class="topbar"><div class="topbar-inner"><div class="logo-wrap"><img src="mgmu.png" alt="MGMU Logo" /><div class="logo-text"><strong>MGMU</strong><span>METROPOLITAN GUARDIAN<br />MEDICAL UNIVERSITY</span></div></div><nav class="nav"><a href="index.html">หน้าแรก</a><a href="about.html">เกี่ยวกับมหาวิทยาลัย</a><a href="faculty.html">คณะวิชา</a><a href="admission.html">รับสมัคร</a><a href="students.html">นักศึกษา</a><a href="research.html">งานวิจัย</a><a href="contact.html">ติดต่อเรา</a></nav><a class="btn-gold" href="login.html">เข้าสู่ระบบ</a></div></header>
+<div class="main"><h2>ข่าวประชาสัมพันธ์ทั้งหมด</h2><div id="news-all" class="grid" style="margin-top:16px">กำลังโหลด...</div></div>
+<footer><div class="footer-inner"><div><img src="mgmu.png" style="height:50px" alt="logo" /><br /><small>MGMU<br />มหาวิทยาลัยเวชศาสตร์มหานครพิทักษ์เวช</small></div><div><h4>สำหรับนักศึกษา</h4><ul><li>ปฏิทินการศึกษา</li><li>ระบบลงทะเบียน</li><li>ตรวจสอบผลการเรียน</li><li>ทุนการศึกษา</li><li>หอพักนักศึกษา</li></ul></div><div><h4>หลักสูตร</h4><ul><li>แพทยศาสตรบัณฑิต</li><li>พยาบาลศาสตร์</li><li>เภสัชศาสตร์</li><li>สาธารณสุขศาสตร์</li><li>เทคนิคการแพทย์</li></ul></div><div><h4>สมัครรับข่าวสาร</h4><small>รับข่าวสารและกิจกรรมจาก MGMU</small><input placeholder="อีเมลของคุณ" style="width:100%;padding:8px;border-radius:4px;border:none;margin-top:6px" /><button style="margin-top:8px;background:var(--gold);border:none;padding:8px 16px;border-radius:20px;font-weight:700;width:100%">สมัครรับข่าวสาร</button></div></div><div class="copy"><span>© 2026 MGMU สงวนลิขสิทธิ์</span><span>นโยบายความเป็นส่วนตัว | แผนผังเว็บไซต์</span></div></footer>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const db=getFirestore(initializeApp({apiKey:"AIzaSyCg8IN6QUb4O3TAk-kGkoiefxGsezw1dPE",authDomain:"mgmu-7ac39.firebaseapp.com",projectId:"mgmu-7ac39",storageBucket:"mgmu-7ac39.firebasestorage.app",messagingSenderId:"371565700622",appId:"1:371565700622:web:382d7a4a695daa2b1dfe5f"}));
+onSnapshot(query(collection(db,"news"),orderBy("createdAt","desc")),snap=>{
+  document.getElementById('news-all').innerHTML=snap.docs.map(d=>{
+    const n=d.data();return `<div class="news-card"><img src="${n.imgUrl||'mgmu_tow.png'}" onerror="this.src='mgmu.png'"><div class="c"><b>${n.title}</b><br><small>${n.desc||''}</small></div></div>`;
+  }).join('')||'ยังไม่มีข่าว';
+});
+</script>
+</body>
+</html>
