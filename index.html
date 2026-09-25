@@ -10,16 +10,18 @@
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:"Sarabun",sans-serif;background:#fff;color:#222;line-height:1.6}
     a{text-decoration:none;color:inherit}
+    /* Topbar - Immutable */
    .topbar{background:var(--navy);color:#fff;position:sticky;top:0;z-index:50}
    .topbar-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 24px}
    .logo-wrap{display:flex;align-items:center;gap:12px}
    .logo-wrap img{height:54px;width:auto;object-fit:contain}
-   .logo-wrap.logo-text strong{font-family:"Noto Serif Thai",serif;font-size:18px;letter-spacing:1px}
-   .logo-wrap.logo-text span{font-size:11px;opacity:.8;display:block;margin-top:-4px}
+   .logo-text strong{font-family:"Noto Serif Thai",serif;font-size:18px;letter-spacing:1px;display:block}
+   .logo-text span{font-size:11px;opacity:.8;display:block;margin-top:-4px}
    .nav{display:flex;gap:22px;font-size:14px}
-   .nav a{opacity:1;object-position:center}
+   .nav a{opacity:1}
    .nav a.active{border-bottom:2px solid var(--gold);color:var(--gold2)}
    .btn-gold{background:var(--gold);color:var(--navy);padding:6px 16px;border-radius:20px;font-weight:700;font-size:13px}
+    /* Hero Slider */
    .hero{position:relative;height:480px;background:var(--navy);overflow:hidden}
    .hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;object-position:center;transition:opacity.8s ease,transform 6s ease;transform:scale(1)}
    .hero-bg.active{opacity:1;transform:scale(1.05)}
@@ -59,15 +61,18 @@
   </style>
 </head>
 <body>
+  <!-- Topbar -->
   <header class="topbar">
     <div class="topbar-inner">
-      <div class="logo-wrap">
+      <a class="logo-wrap" href="index.html">
         <img src="mgmu.png" alt="MGMU Logo" />
         <div class="logo-text">
-          <div class="logo-text"><strong>MGMU</strong><span>METROPOLITAN GUARDIAN MEDICAL UNIVERSITY</span></div>
-    </a>
+          <strong>MGMU</strong>
+          <span>METROPOLITAN GUARDIAN MEDICAL UNIVERSITY</span>
+        </div>
+      </a>
       <nav class="nav">
-        <a class="active" href="#home">หน้าแรก</a>
+        <a class="active" href="index.html">หน้าแรก</a>
         <a href="about.html">เกี่ยวกับมหาวิทยาลัย</a>
         <a href="faculty.html">คณะวิชา</a>
         <a href="admission.html">รับสมัคร</a>
@@ -79,8 +84,9 @@
     </div>
   </header>
 
+  <!-- Content -->
   <section class="hero" id="home">
-    <img class="hero-bg active" src="mgmu_tow.png" alt="MGMU Building" id="slide0" onerror="this.src='mgmu.png'">
+    <img class="hero-bg active" src="mgmu_tow.png" alt="MGMU Building 1" id="slide0" onerror="this.src='mgmu.png'">
     <img class="hero-bg" src="mgmu02.png" alt="MGMU Building 2" id="slide1" onerror="this.src='mgmu_tow.png'">
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -113,25 +119,23 @@
       <div class="card-dean"><img src="01.png" alt="" /><div><b>Dr. Albus Ignatius Peverell</b><br /><small>อัลบัส</small></div></div>
       <div class="card-dean"><img src="01.png" alt="" /><div><b>Dr. Alice Vance Peverell</b><br/><small>อลิซ</small></div></div>
     </div>
-
     <div>
       <div class="col-title">ข่าวประชาสัมพันธ์ <a href="news.html">ดูทั้งหมด →</a></div>
       <div id="index-news-list"></div>
     </div>
-
     <div>
-      <div class="col-title">วันสำคัญ</div>
-      <div class="event-row"><div class="event-date"><strong>30</strong>ก.ค</div><div><b>วันสถาปนามหาวิทยาลัย</b><br /><small></small></div></div>
+      <div class="col-title">ปฏิทินกิจกรรม</div>
+      <div class="event-row"><div class="event-date"><strong>05</strong>ส.ค.</div><div><b>ปฐมนิเทศนักศึกษาใหม่</b><br /><small>หอประชุมใหญ่ MGMU</small></div></div>
       <div class="event-row"><div class="event-date"><strong>12</strong>ส.ค.</div><div><b>MGMU Research Expo 2024</b><br /><small>อาคารวิจัย</small></div></div>
       <div class="event-row"><div class="event-date"><strong>20</strong>ส.ค.</div><div><b>วันสถาปนามหาวิทยาลัย</b><br /><small>ลานพิธีการ</small></div></div>
     </div>
-
     <div>
       <div class="col-title">ลิงก์ด่วน</div>
       <ul class="link-list"><li><a href="regis.html">📝 ระบบลงทะเบียน</a></li><li><a href="elearning.html">💻 E-Learning</a></li><li><a href="mail.html">✉️ MGMU Mail</a></li><li><a href="job.html">💼 สมัครงาน</a></li><li><a href="alumni.html">🎓 ศิษย์เก่า MGMU</a></li></ul>
     </div>
   </main>
 
+  <!-- Footer -->
   <footer>
     <div class="footer-inner">
       <div><img src="mgmu.png" style="height:50px" alt="logo" /><br /><small>MGMU<br />มหาวิทยาลัยเวชศาสตร์มหานครพิทักษ์เวช</small></div>
@@ -143,36 +147,25 @@
   </footer>
 
 <script>
-let cur=0;
-const slides=[document.getElementById('slide0'),document.getElementById('slide1')];
-const dots=document.querySelectorAll('.hero-dots button');
-function goSlide(n){
-  slides[cur].classList.remove('active');
-  dots[cur].classList.remove('active');
-  cur=n;
-  slides[cur].classList.add('active');
-  dots[cur].classList.add('active');
-}
-setInterval(()=>{ goSlide(cur===0?1:0); },5000);
-let startX=0;
-const hero=document.getElementById('home');
-hero.addEventListener('touchstart',e=>startX=e.touches[0].clientX);
-hero.addEventListener('touchend',e=>{ let d=e.changedTouches[0].clientX-startX; if(Math.abs(d)>50) goSlide(cur===0?1:0); });
-hero.addEventListener('mousedown',e=>startX=e.clientX);
-hero.addEventListener('mouseup',e=>{ let d=e.clientX-startX; if(Math.abs(d)>80) goSlide(cur===0?1:0); });
+// สไลด์ mgmu_tow.png <-> mgmu02.png อัตโนมัติ + เลื่อนเอง
+let cur=0; const slides=[document.getElementById('slide0'),document.getElementById('slide1')]; const dots=document.querySelectorAll('.hero-dots button');
+function goSlide(n){ slides[cur].classList.remove('active'); dots[cur].classList.remove('active'); cur=n; slides[cur].classList.add('active'); dots[cur].classList.add('active'); }
+setInterval(()=>{ goSlide(cur===0?1:0); },4000);
+let sx=0; const hero=document.getElementById('home');
+hero.addEventListener('touchstart',e=>sx=e.touches[0].clientX);
+hero.addEventListener('touchend',e=>{ if(Math.abs(e.changedTouches[0].clientX-sx)>50) goSlide(cur===0?1:0); });
+hero.addEventListener('mousedown',e=>sx=e.clientX);
+hero.addEventListener('mouseup',e=>{ if(Math.abs(e.clientX-sx)>80) goSlide(cur===0?1:0); });
 </script>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, query, orderBy, limit, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-const db = getFirestore(initializeApp({apiKey:"AIzaSyCg8IN6QUb4O3TAk-kGkoiefxGsezw1dPE",authDomain:"mgmu-7ac39.firebaseapp.com",projectId:"mgmu-7ac39",storageBucket:"mgmu-7ac39.firebasestorage.app",messagingSenderId:"371565700622",appId:"1:371565700622:web:382d7a4a695daa2b1dfe5f"}));
-onSnapshot(query(collection(db,"news"),orderBy("createdAt","desc"),limit(3)),snap=>{
+const db=getFirestore(initializeApp({apiKey:"AIzaSyCg8IN6QUb4O3TAk-kGkoiefxGsezw1dPE",authDomain:"mgmu-7ac39.firebaseapp.com",projectId:"mgmu-7ac39",storageBucket:"mgmu-7ac39.firebasestorage.app",messagingSenderId:"371565700622",appId:"1:371565700622:web:382d7a4a695daa2b1dfe5f"}));
+onSnapshot(query(collection(db,"news"),orderBy("createdAt","desc"),limit(3)),s=>{
   const el=document.getElementById('index-news-list');
-  if(snap.empty){el.innerHTML='<div class="news-item"><div><b>ยังไม่มีข่าวในระบบ</b><span></span></div></div>';return}
-  el.innerHTML=snap.docs.map(d=>{
-    const n=d.data();
-    return `<div class="news-item"><img src="${n.imgUrl||'02.png'}" onerror="this.src='02.png'"><div><b>${n.title}</b><span>${(n.desc||'').slice(0,60)}...</span></div></div>`;
-  }).join('');
+  if(s.empty){el.innerHTML='<div class="news-item"><div><b>ยังไม่มีข่าวในระบบ</b></div></div>';return}
+  el.innerHTML=s.docs.map(d=>{const n=d.data();return `<div class="news-item"><img src="${n.imgUrl||'mgmu.png'}" onerror="this.src='mgmu.png'"><div><b>${n.title}</b><span>${(n.desc||'').slice(0,60)}...</span></div></div>`}).join('');
 });
 </script>
 </body>
