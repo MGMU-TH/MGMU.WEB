@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ถาม-ตอบ | MGMU</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;700&family=Noto+Serif+Thai:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root{--navy:#0d1b36;--gold:#c9a86a;--gold2:#e9c77a}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:"Sarabun",sans-serif;background:#fff;color:#222;line-height:1.6}
+    a{text-decoration:none;color:inherit}
+    .topbar{background:#0d1b36;color:#fff;position:sticky;top:0;z-index:50}
+    .topbar-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 24px}
+    .logo-wrap{display:flex;align-items:center;gap:12px}
+    .logo-wrap img{height:54px;width:auto;object-fit:contain}
+    .logo-text strong{font-family:"Noto Serif Thai",serif;font-size:18px;letter-spacing:1px;display:block}
+    .logo-text span{font-size:11px;opacity:.8;display:block;margin-top:-4px}
+    .nav{display:flex;gap:22px;font-size:14px;align-items:center}
+    .nav a{padding:4px 0;border-bottom:2px solid transparent}
+    .nav a.active{border-bottom:2px solid #c9a86a;color:#e9c77a;font-weight:700}
+    .btn-gold{background:#c9a86a;color:#0d1b36;padding:6px 16px;border-radius:20px;font-weight:700;font-size:13px}
+    .page-wrap{max-width:900px;margin:0 auto;padding:32px 24px;min-height:60vh}
+    .card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:18px;margin-bottom:16px}
+    .card input,.card textarea{width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font-family:"Sarabun";margin-top:6px}
+    .btn{padding:10px 16px;background:#0d1b36;color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px}
+    .post{border:1px solid #e5e7eb;border-radius:12px;padding:14px;margin-bottom:10px;background:#fff}
+    .ans{margin-top:10px;padding-left:12px;border-left:3px solid #c9a86a;font-size:14px;display:none}
+    .ans.open{display:block}
+    footer{background:#0d1b36;color:#fff;padding:32px 24px 16px;margin-top:60px}
+    .footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.2fr 0.6fr 0.6fr 0.8fr;gap:24px}
+    footer h4{color:#e9c77a;font-size:14px;margin-bottom:8px}
+    footer li{list-style:none;font-size:13px;opacity:.8;margin-bottom:6px}
+    footer small{font-size:13px;opacity:.8}
+    .copy{border-top:1px solid #ffffff14;margin-top:24px;padding-top:12px;display:flex;justify-content:space-between;font-size:12px;opacity:.6;max-width:1280px;margin-left:auto;margin-right:auto}
+  </style>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="logo-wrap" href="index.html">
+        <img src="mgmu.png" alt="MGMU">
+        <div class="logo-text">
+          <strong>MGMU</strong>
+          <span>METROPOLITAN GUARDIAN MEDICAL UNIVERSITY</span>
+        </div>
+      </a>
+      <nav class="nav">
+        <a href="index.html">หน้าแรก</a>
+        <a href="about.html">เกี่ยวกับมหาวิทยาลัย</a>
+        <a href="faculties.html">คณะวิชา</a>
+        <a href="admission.html">รับสมัคร</a>
+        <a href="students.html">นักศึกษา</a>
+        <a href="research.html">งานวิจัย</a>
+        <a href="contact.html">ติดต่อเรา</a>
+        <a class="active" href="qa.html">ถาม-ตอบ</a>
+      </nav>
+      <a class="btn-gold" href="login.html">เข้าสู่ระบบ</a>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <div class="page-wrap">
+    <! แก้....ตรงนี้นะ >
+    <h1 style="font-family:'Noto Serif Thai';font-size:26px;color:#0d1b36">กระดานถาม-ตอบ</h1>
+    <p style="font-size:13px;opacity:.7;margin:6px 0 16px">ตั้งกระทู้คำถาม แล้วให้ผู้รู้มาตอบ</p>
+
+    <div class="card">
+      <b style="font-size:14px">ตั้งคำถามใหม่</b>
+      <input id="q-title" placeholder="หัวข้อคำถาม">
+      <textarea id="q-detail" rows="3" placeholder="รายละเอียด"></textarea>
+      <input id="q-name" placeholder="ชื่อ (ไม่ใส่ก็ได้)">
+      <button class="btn" style="margin-top:10px;width:100%;background:#c9a86a;color:#0d1b36" onclick="addQ()">+ ตั้งกระทู้</button>
+    </div>
+
+    <div id="list">กำลังโหลด...</div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <img src="mgmu.png" style="height:50px" alt="logo"><br>
+        <small>MGMU<br>มหาวิทยาลัยเวชศาสตร์มหานครพิทักษ์เวช</small>
+      </div>
+      <div>
+        <h4>สำหรับนักศึกษา</h4>
+        <ul>
+          <li>ปฏิทินการศึกษา</li>
+          <li>ระบบลงทะเบียน</li>
+          <li>ตรวจสอบผลการเรียน</li>
+          <li>ทุนการศึกษา</li>
+          <li>หอพักนักศึกษา</li>
+        </ul>
+      </div>
+      <div>
+        <h4>หลักสูตร</h4>
+        <ul>
+          <li>แพทยศาสตรบัณฑิต</li>
+          <li>พยาบาลศาสตร์</li>
+          <li>เภสัชศาสตร์</li>
+          <li>สาธารณสุขศาสตร์</li>
+          <li>เทคนิคการแพทย์</li>
+        </ul>
+      </div>
+      <div>
+        <h4>สมัครรับข่าวสาร</h4>
+        <small>รับข่าวสารและกิจกรรมจาก MGMU</small>
+        <input placeholder="อีเมลของคุณ" style="width:100%;padding:8px;border-radius:4px;border:none;margin-top:6px">
+        <button style="margin-top:8px;background:#c9a86a;border:none;padding:8px 16px;border-radius:20px;font-weight:700;width:100%">สมัครรับข่าวสาร</button>
+      </div>
+    </div>
+    <div class="copy">
+      <span>© 2026 MGMU สงวนลิขสิทธิ์</span>
+      <span>นโยบายความเป็นส่วนตัว | แผนผังเว็บไซต์</span>
+    </div>
+  </footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const db=getFirestore(initializeApp({apiKey:"AIzaSyCg8IN6QUb4O3TAk-kGkoiefxGsezw1dPE",authDomain:"mgmu-7ac39.firebaseapp.com",projectId:"mgmu-7ac39",storageBucket:"mgmu-7ac39.firebasestorage.app",messagingSenderId:"371565700622",appId:"1:371565700622:web:382d7a4a695daa2b1dfe5f"}));
+window.addQ=async()=>{
+  const t=document.getElementById('q-title').value.trim();
+  const d=document.getElementById('q-detail').value.trim();
+  const n=document.getElementById('q-name').value.trim()||'ไม่ระบุชื่อ';
+  if(!t) return alert('ใส่หัวข้อก่อน');
+  await addDoc(collection(db,"qa_posts"),{title:t,detail:d,name:n,createdAt:serverTimestamp()});
+  document.getElementById('q-title').value='';document.getElementById('q-detail').value='';
+};
+onSnapshot(query(collection(db,"qa_posts"),orderBy("createdAt","desc")),async snap=>{
+  const el=document.getElementById('list');
+  if(snap.empty){el.innerHTML='<small>ยังไม่มีคำถาม</small>';return}
+  el.innerHTML=await Promise.all(snap.docs.map(async s=>{
+    const q=s.data();const id=s.id;
+    const aSnap=await getDocs(collection(db,"qa_posts",id,"answers"));
+    return `<div class="post"><b>❓ ${q.title}</b> <small style="opacity:.6">- ${q.name}</small><div style="font-size:14px;margin-top:4px">${q.detail||''}</div><button class="btn" style="margin-top:8px;font-size:12px;padding:6px 10px" onclick="document.getElementById('a-${id}').classList.toggle('open')">💬 ตอบ (${aSnap.size})</button><div id="a-${id}" class="ans"><div>${aSnap.docs.map(a=>`<div style="padding:6px 0;border-bottom:1px solid #f3f4f6"><b>${a.data().name}:</b> ${a.data().text}</div>`).join('')||'<small>ยังไม่มีคำตอบ</small>'}</div><div style="display:flex;gap:6px;margin-top:8px"><input id="an-${id}" placeholder="ชื่อ" style="width:25%"><input id="at-${id}" placeholder="คำตอบ..." style="flex:1"><button class="btn" onclick="addA('${id}')">ส่ง</button></div></div></div>`;
+  })).then(v=>v.join(''));
+});
+window.addA=async(id)=>{
+  const text=document.getElementById('at-'+id).value.trim();
+  const name=document.getElementById('an-'+id).value.trim()||'ผู้รู้';
+  if(!text) return;
+  await addDoc(collection(db,"qa_posts",id,"answers"),{text,name,createdAt:serverTimestamp()});
+  location.reload();
+};
+</script>
+</body>
+</html>
