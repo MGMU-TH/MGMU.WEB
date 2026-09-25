@@ -141,7 +141,7 @@ onSnapshot(query(collection(db,"news"),orderBy("createdAt","desc"),limit(3)),sna
   if(snap.empty){el.innerHTML='<div class="news-item"><div><b>ยังไม่มีข่าวในระบบ</b><span></span></div></div>';return}
   el.innerHTML=snap.docs.map(d=>{
     const n=d.data();
-    return `<div class="news-item"><img src="${n.imgUrl||'mgmu_tow.png'}" onerror="this.src='mgmu.png'"><div><b>${n.title}</b><span>${(n.desc||'').slice(0,60)}...</span></div></div>`;
+    return `<div class="news-item"><img src="${n.imgUrl||'02.png'}" onerror="this.src='02.png'"><div><b>${n.title}</b><span>${(n.desc||'').slice(0,60)}...</span></div></div>`;
   }).join('');
 });
 </script>
