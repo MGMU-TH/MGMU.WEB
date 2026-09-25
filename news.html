@@ -25,7 +25,7 @@ import { getFirestore, collection, query, orderBy, onSnapshot } from "https://ww
 const db=getFirestore(initializeApp({apiKey:"AIzaSyCg8IN6QUb4O3TAk-kGkoiefxGsezw1dPE",authDomain:"mgmu-7ac39.firebaseapp.com",projectId:"mgmu-7ac39",storageBucket:"mgmu-7ac39.firebasestorage.app",messagingSenderId:"371565700622",appId:"1:371565700622:web:382d7a4a695daa2b1dfe5f"}));
 onSnapshot(query(collection(db,"news"),orderBy("createdAt","desc")),snap=>{
   document.getElementById('news-all').innerHTML=snap.docs.map(d=>{
-    const n=d.data();return `<div class="news-card"><img src="${n.imgUrl||'mgmu_tow.png'}" onerror="this.src='mgmu.png'"><div class="c"><b>${n.title}</b><br><small>${n.desc||''}</small></div></div>`;
+    const n=d.data();return `<div class="news-card"><img src="${n.imgUrl||'01.png'}" onerror="this.src='mgmu.png'"><div class="c"><b>${n.title}</b><br><small>${n.desc||''}</small></div></div>`;
   }).join('')||'ยังไม่มีข่าว';
 });
 </script>
