@@ -1,0 +1,41 @@
+/* ===== MGMU Auto Responsive : มือถือ / iPad / คอม ===== */
+
+/* --- 1. มือถือ : จอเล็กกว่า 600px --- */
+@media(max-width:600px){
+.topbar-inner{flex-wrap:wrap;padding:10px 12px}
+.logo-wrap img{height:40px}
+.logo-text strong{font-size:15px}
+.logo-text span{font-size:8px}
+.nav{display:none;width:100%;flex-direction:column;gap:10px;padding:10px 0}
+.nav.show{display:flex}
+.menu-toggle{display:block!important;background:#c9a86a;border:0;padding:6px 14px;border-radius:20px;font-weight:700;cursor:pointer;color:#0d1b36}
+.hero{height:auto!important;min-height:360px}
+.hero-content{padding:36px 16px!important}
+.hero-content h1{font-size:22px!important}
+.hero-content h2{font-size:11px!important}
+.hero-content p{font-size:13px;max-width:100%}
+.hero-btns{flex-wrap:wrap}
+.quickbar-inner{display:grid!important;grid-template-columns:1fr 1fr;gap:8px;padding:12px!important}
+.main{grid-template-columns:1fr!important;padding:16px!important}
+.footer-inner{grid-template-columns:1fr!important}
+.copy{flex-direction:column;text-align:center;gap:6px}
+}
+
+/* --- 2. iPad / แท็บเล็ต : 601px - 1024px --- */
+@media(min-width:601px) and (max-width:1024px){
+.topbar-inner{padding:10px 16px}
+.nav{gap:12px;font-size:13px}
+.hero{height:420px}
+.hero-content{padding:60px 20px}
+.hero-content h1{font-size:28px}
+.main{grid-template-columns:1fr 1fr!important;padding:20px;gap:20px}
+.quickbar-inner{display:grid!important;grid-template-columns:repeat(4,1fr);gap:10px;padding:12px 16px!important}
+.footer-inner{grid-template-columns:1fr 1fr!important;gap:20px}
+.menu-toggle{display:none!important}
+}
+
+/* --- 3. คอม : ใหญ่กว่า 1024px --- */
+@media(min-width:1025px){
+.menu-toggle{display:none!important}
+.main{grid-template-columns:1.2fr 1.2fr 0.8fr 0.7fr}
+}
