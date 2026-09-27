@@ -1,20 +1,8 @@
-/* บังคับโหมดเดสก์ท็อป - ล้าง responsive ทั้งหมด */
-html, body{
-  min-width:1280px!important;
-  overflow-x:auto!important;
-}
-
-.menu-toggle{
-  display:none!important;
-}
-
-.nav{
-  display:flex!important;
-}
-
-/* กันเผลอมี media query เก่าค้าง */
-@media(max-width:600px){
-  .topbar-inner, .main, .footer-inner, .founder-card, .info-grid{
-    grid-template-columns:initial!important;
-  }
-}
+/* บังคับเดสก์ท็อป 100% - ห้ามมี @media */
+html,body{min-width:1280px;overflow-x:auto}
+.menu-toggle{display:none!important}
+.nav{display:flex!important}
+.founder-card{display:grid!important;grid-template-columns:340px 1fr!important}
+.info-grid{display:grid!important;grid-template-columns:1fr 1fr 1fr!important;gap:16px;margin-top:32px}
+.footer-inner{display:grid!important;grid-template-columns:1.2fr 0.6fr 0.6fr 0.8fr!important}
+.main{display:grid!important;grid-template-columns:1.2fr 1.2fr 0.8fr 0.7fr!important}
