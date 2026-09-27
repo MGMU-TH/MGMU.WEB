@@ -64,3 +64,25 @@
   .menu-toggle{display:none!important}
   .main{grid-template-columns:1.2fr 1.2fr 0.8fr 0.7fr}
 }
+@media(max-width:600px){
+  .founder-card{
+    grid-template-columns:1fr!important;
+    gap:16px!important;
+    padding:16px!important;
+    margin-top:-40px!important;
+  }
+  .founder-img, #founder-placeholder{
+    height:280px!important;
+  }
+  .hero-about{height:auto!important;min-height:280px}
+  .hero-about-content{padding:28px 16px!important}
+  .hero-about-content h1{font-size:26px!important}
+
+  /* กล่อง 3 ใบด้านล่าง */
+  .page-wrap > div[style*="1fr 1fr 1fr"]{
+    grid-template-columns:1fr!important;
+  }
+}
+
+.info-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:32px}
+@media(max-width:600px){ .info-grid{grid-template-columns:1fr!important} }
