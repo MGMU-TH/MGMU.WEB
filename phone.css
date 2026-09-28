@@ -5,4 +5,3 @@ html,body{min-width:1280px;overflow-x:auto}
 .founder-card{display:grid!important;grid-template-columns:340px 1fr!important}
 .info-grid{display:grid!important;grid-template-columns:1fr 1fr 1fr!important;gap:16px;margin-top:32px}
 .footer-inner{display:grid!important;grid-template-columns:1.2fr 0.6fr 0.6fr 0.8fr!important}
-.main{display:grid!important;grid-template-columns:1.2fr 1.2fr 0.8fr 0.7fr!important}
