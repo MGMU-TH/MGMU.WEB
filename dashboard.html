@@ -72,14 +72,38 @@ window.logout = async ()=>{ try{ await signOut(auth); }catch(e){} localStorage.c
 </div>
 
 <div class="card" id="research-mgmt" style="border:2px solid #22c55e">
-<h3>🔬 งานวิจัย - แนบ PDF</h3>
+<h3>🔬 งานวิจัย - ใส่ลิงก์ PDF / Drive</h3>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-<input id="res-title" placeholder="ชื่องานวิจัย"><input id="res-author" placeholder="ชื่อผู้วิจัย">
-<input id="res-faculty" placeholder="คณะ: พิมพ์เอง"><input id="res-pdf" type="file" accept="application/pdf">
+<input id="res-title" placeholder="ชื่องานวิจัย">
+<input id="res-author" placeholder="ชื่อผู้วิจัย">
+<input id="res-faculty" placeholder="คณะ: พิมพ์เอง">
+<input id="res-link" placeholder="วางลิงก์ PDF / Google Drive ที่นี่">
 </div>
 <textarea id="res-desc" placeholder="บทคัดย่อ"></textarea>
-<button class="btn-gold" onclick="addResearch()">+ เพิ่มงานวิจัย PDF</button><div id="research-list"></div>
+<button class="btn-gold" onclick="addResearch()">+ เพิ่มงานวิจัย (ลิงก์)</button>
+<div id="research-list"></div>
 </div>
+
+<script>
+window.addResearch = async ()=>{
+  const title=document.getElementById('res-title').value.trim();
+  const author=document.getElementById('res-author').value.trim();
+  const faculty=document.getElementById('res-faculty').value.trim();
+  const link=document.getElementById('res-link').value.trim();
+  const desc=document.getElementById('res-desc').value.trim();
+  if(!title||!link) return alert('ใส่ชื่องานวิจัยและลิงก์ PDF ก่อน');
+  await addDoc(collection(db,"research"),{
+    title, author, faculty, desc,
+    pdfUrl: link,
+    driveUrl: link,
+    link: link,
+    createdAt: serverTimestamp()
+  });
+  document.getElementById('res-title').value='';
+  document.getElementById('res-link').value='';
+  document.getElementById('res-desc').value='';
+};
+</script>
 
 <div class="card" id="news">
 <h3>📰 ข่าว</h3>
