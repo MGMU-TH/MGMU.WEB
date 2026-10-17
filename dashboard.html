@@ -22,22 +22,14 @@ input,textarea,select{width:100%;padding:10px;border:1px solid #d1d5db;border-ra
 <link rel="stylesheet" href="phone.css">
 </head>
 <body>
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-const firebaseConfig = { apiKey: "AIzaSyCg8IN6QUb4O3TAk-kGkoiefxGsezw1dPE", authDomain: "mgmu-7ac39.firebaseapp.com", projectId: "mgmu-7ac39", storageBucket: "mgmu-7ac39.firebasestorage.app", messagingSenderId: "371565700622", appId: "1:371565700622:web:382d7a4a695daa2b1dfe5f" };
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-onAuthStateChanged(auth, (user)=>{ const localAdmin = localStorage.getItem('mgmu_user')==='admin'; if(!user &&!localAdmin){ location.href='login.html'; } });
-window.logout = async ()=>{ try{ await signOut(auth); }catch(e){} localStorage.clear(); location.href='login.html'; }
-</script>
 
 <div class="sidebar">
 <h2>MGMU ADMIN</h2>
 <div class="menu">
 <a href="#students-mgmt">🎓 นักศึกษา</a>
 <a href="#personnel-mgmt">👨‍⚕️ บุคลากร</a>
-<a href="#research-mgmt">🔬 งานวิจัย PDF</a>
+<a href="#research-mgmt">🔬 งานวิจัย (ลิงก์)</a>
+<a href="#curriculum-mgmt">🎓 หลักสูตร (ลิงก์)</a>
 <a href="#news">📰 ข่าวสาร</a>
 <a href="#" onclick="logout()" style="margin-top:20px;color:#f87171">🚪 ออก</a>
 </div>
@@ -48,7 +40,7 @@ window.logout = async ()=>{ try{ await signOut(auth); }catch(e){} localStorage.c
 <div class="card"><b id="count-students">-</b><br>นักศึกษา</div>
 <div class="card"><b id="count-personnel">-</b><br>บุคลากร</div>
 <div class="card"><b id="count-research">-</b><br>งานวิจัย</div>
-<div class="card"><b id="count-news">-</b><br>ข่าว</div>
+<div class="card"><b id="count-curriculum">-</b><br>หลักสูตร</div>
 </div>
 
 <div class="card" id="students-mgmt" style="border:2px solid var(--gold)">
@@ -72,38 +64,27 @@ window.logout = async ()=>{ try{ await signOut(auth); }catch(e){} localStorage.c
 </div>
 
 <div class="card" id="research-mgmt" style="border:2px solid #22c55e">
-<h3>🔬 งานวิจัย - ใส่ลิงก์ PDF / Drive</h3>
+<h3>🔬 งานวิจัย - ใส่ลิงก์ PDF / Drive (ไม่ต้องอัปโหลด)</h3>
+<div id="res-status" style="font-size:12px;opacity:.6;margin-bottom:6px"></div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
 <input id="res-title" placeholder="ชื่องานวิจัย">
 <input id="res-author" placeholder="ชื่อผู้วิจัย">
 <input id="res-faculty" placeholder="คณะ: พิมพ์เอง">
-<input id="res-link" placeholder="วางลิงก์ PDF / Google Drive ที่นี่">
+<input id="res-link" placeholder="วางลิงก์ PDF / Google Drive ที่นี่ *จำเป็น">
 </div>
 <textarea id="res-desc" placeholder="บทคัดย่อ"></textarea>
 <button class="btn-gold" onclick="addResearch()">+ เพิ่มงานวิจัย (ลิงก์)</button>
 <div id="research-list"></div>
 </div>
 
-<script>
-window.addResearch = async ()=>{
-  const title=document.getElementById('res-title').value.trim();
-  const author=document.getElementById('res-author').value.trim();
-  const faculty=document.getElementById('res-faculty').value.trim();
-  const link=document.getElementById('res-link').value.trim();
-  const desc=document.getElementById('res-desc').value.trim();
-  if(!title||!link) return alert('ใส่ชื่องานวิจัยและลิงก์ PDF ก่อน');
-  await addDoc(collection(db,"research"),{
-    title, author, faculty, desc,
-    pdfUrl: link,
-    driveUrl: link,
-    link: link,
-    createdAt: serverTimestamp()
-  });
-  document.getElementById('res-title').value='';
-  document.getElementById('res-link').value='';
-  document.getElementById('res-desc').value='';
-};
-</script>
+<div class="card" id="curriculum-mgmt" style="border:2px solid var(--gold)">
+<h3>🎓 หลักสูตรเปิดเผย MGMU - ใส่ลิงก์ Drive</h3>
+<input id="cur-title" placeholder="ชื่อหลักสูตร" value="หลักสูตรเปิดเผย MGMU">
+<input id="cur-link" placeholder="วางลิงก์ Google Drive ที่นี่">
+<textarea id="cur-desc" placeholder="รายละเอียด"></textarea>
+<button class="btn-gold" onclick="addCurriculum()">+ เพิ่ม/อัปเดตหลักสูตร</button>
+<div id="curriculum-list"></div>
+</div>
 
 <div class="card" id="news">
 <h3>📰 ข่าว</h3>
@@ -115,29 +96,63 @@ window.addResearch = async ()=>{
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, serverTimestamp, query, orderBy, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+
 const firebaseConfig = { apiKey: "AIzaSyCg8IN6QUb4O3TAk-kGkoiefxGsezw1dPE", authDomain: "mgmu-7ac39.firebaseapp.com", projectId: "mgmu-7ac39", storageBucket: "mgmu-7ac39.firebasestorage.app", messagingSenderId: "371565700622", appId: "1:371565700622:web:382d7a4a695daa2b1dfe5f" };
-const app2 = initializeApp(firebaseConfig);
-const db = getFirestore(app2);
-const storage = getStorage(app2);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+onAuthStateChanged(auth, (user)=>{ const localAdmin = localStorage.getItem('mgmu_user')==='admin'; if(!user && !localAdmin){ location.href='login.html'; } });
+window.logout = async ()=>{ try{ await signOut(auth); }catch(e){} localStorage.clear(); location.href='login.html'; }
+
 document.getElementById('firebase-status').className='status ok';
-document.getElementById('firebase-status').textContent='✅ เชื่อมต่อแล้ว';
-function init(){
+document.getElementById('firebase-status').textContent='✅ เชื่อมต่อแล้ว - งานวิจัยแบบลิงก์พร้อมใช้';
+
+async function up(file,folder){ if(!file) return ""; const r=ref(storage,folder+'/'+Date.now()+'_'+file.name); await uploadBytes(r,file); return await getDownloadURL(r); }
+
 onSnapshot(query(collection(db,"students"),orderBy("createdAt","desc")), s=>{ document.getElementById('count-students').textContent=s.size; document.getElementById('student-list').innerHTML=s.docs.map(d=>{const v=d.data();return `<div style="display:flex;justify-content:space-between;padding:6px;border-bottom:1px solid #eee;font-size:13px"><span><b>${v.studentId}</b> ${v.fullName} (${v.faculty})</span><button onclick="delStudent('${d.id}')" style="color:red;border:none;background:none">ลบ</button></div>`}).join(''); });
 onSnapshot(query(collection(db,"personnel"),orderBy("createdAt","desc")), s=>{ document.getElementById('count-personnel').textContent=s.size; document.getElementById('personnel-list').innerHTML=s.docs.map(d=>{const v=d.data();return `<div style="display:flex;justify-content:space-between;padding:6px;border-bottom:1px solid #eee;font-size:13px"><span><b>${v.name}</b> ${v.faculty}</span><button onclick="delPersonnel('${d.id}')" style="color:red;border:none;background:none">ลบ</button></div>`}).join(''); });
-onSnapshot(query(collection(db,"research"),orderBy("createdAt","desc")), s=>{ document.getElementById('count-research').textContent=s.size; document.getElementById('research-list').innerHTML=s.docs.map(d=>{const v=d.data();return `<div style="display:flex;justify-content:space-between;padding:6px;border-bottom:1px solid #eee;font-size:13px"><span><b>${v.title}</b> ${v.faculty} ${v.pdfUrl?'📄':''}</span><button onclick="delResearch('${d.id}')" style="color:red;border:none;background:none">ลบ</button></div>`}).join(''); });
-onSnapshot(query(collection(db,"news"),orderBy("createdAt","desc")), s=>{ document.getElementById('count-news').textContent=s.size; document.getElementById('news-list').innerHTML=s.docs.map(d=>{return `<div style="padding:6px;border-bottom:1px solid #eee;font-size:13px"><b>${d.data().title}</b> <button onclick="delNews('${d.id}')" style="color:red;border:none;background:none;float:right">ลบ</button></div>`}).join(''); });
-}
-init();
-async function up(file,folder){ if(!file) return ""; const r=ref(storage,folder+'/'+Date.now()+'_'+file.name); await uploadBytes(r,file); return await getDownloadURL(r); }
+onSnapshot(query(collection(db,"research"),orderBy("createdAt","desc")), s=>{ document.getElementById('count-research').textContent=s.size; document.getElementById('research-list').innerHTML=s.docs.map(d=>{const v=d.data();const link=v.link||v.driveUrl||v.pdfUrl||'';return `<div style="display:flex;justify-content:space-between;padding:6px;border-bottom:1px solid #eee;font-size:13px"><span><b>${v.title}</b> ${v.faculty} ${link?`<a href="${link}" target="_blank">📄 เปิดลิงก์</a>`:''}</span><button onclick="delResearch('${d.id}')" style="color:red;border:none;background:none">ลบ</button></div>`}).join(''); });
+onSnapshot(query(collection(db,"curriculum"),orderBy("createdAt","desc")), s=>{ document.getElementById('count-curriculum').textContent=s.size; document.getElementById('curriculum-list').innerHTML=s.docs.map(d=>{const v=d.data();const link=v.link||v.driveUrl||'';return `<div style="padding:6px;border-bottom:1px solid #eee;font-size:13px"><b>${v.title}</b> <a href="${link}" target="_blank">${link}</a> <button onclick="delCurriculum('${d.id}')" style="color:red;border:none;background:none;float:right">ลบ</button></div>`}).join(''); });
+onSnapshot(query(collection(db,"news"),orderBy("createdAt","desc")), s=>{ document.getElementById('news-list').innerHTML=s.docs.map(d=>{return `<div style="padding:6px;border-bottom:1px solid #eee;font-size:13px"><b>${d.data().title}</b> <button onclick="delNews('${d.id}')" style="color:red;border:none;background:none;float:right">ลบ</button></div>`}).join(''); });
+
 window.addStudent=async()=>{ const id=document.getElementById('stu-id').value.trim(); const name=document.getElementById('stu-name').value.trim(); const fac=document.getElementById('stu-faculty').value.trim(); const year=document.getElementById('stu-year').value.trim(); const st=document.getElementById('stu-status').value; if(!id||!name) return alert('ใส่รหัสชื่อ'); await setDoc(doc(db,"students",id),{studentId:id,fullName:name,name,faculty:fac,year,status:st,createdAt:serverTimestamp()}); };
 window.addPersonnel=async()=>{ const name=document.getElementById('per-name').value.trim(); const pos=document.getElementById('per-position').value.trim(); const fac=document.getElementById('per-faculty').value.trim(); const email=document.getElementById('per-email').value.trim(); const file=document.getElementById('per-img').files[0]; if(!name) return alert('ใส่ชื่อ'); const img=await up(file,'personnel'); await addDoc(collection(db,"personnel"),{name,position:pos,faculty:fac,email,imgUrl:img,createdAt:serverTimestamp()}); };
-window.addResearch=async()=>{ const title=document.getElementById('res-title').value.trim(); const author=document.getElementById('res-author').value.trim(); const fac=document.getElementById('res-faculty').value.trim(); const desc=document.getElementById('res-desc').value.trim(); const file=document.getElementById('res-pdf').files[0]; if(!title) return alert('ใส่ชื่อ'); let pdfUrl=""; if(file){ const r=ref(storage,'research/'+Date.now()+'_'+file.name); await uploadBytes(r,file); pdfUrl=await getDownloadURL(r); } await addDoc(collection(db,"research"),{title,author,faculty:fac,desc,pdfUrl,createdAt:serverTimestamp()}); document.getElementById('res-title').value=''; document.getElementById('res-desc').value=''; };
+
+window.addResearch=async()=>{
+  try{
+    const title=document.getElementById('res-title').value.trim();
+    const author=document.getElementById('res-author').value.trim();
+    const fac=document.getElementById('res-faculty').value.trim();
+    const link=document.getElementById('res-link').value.trim();
+    const desc=document.getElementById('res-desc').value.trim();
+    if(!title||!link) return alert('ใส่ชื่องานวิจัยและลิงก์ PDF ก่อน');
+    document.getElementById('res-status').textContent='กำลังบันทึก...';
+    await addDoc(collection(db,"research"),{title,author,faculty:fac,desc,link,pdfUrl:link,driveUrl:link,createdAt:serverTimestamp()});
+    document.getElementById('res-status').textContent='✅ บันทึกแล้ว';
+    document.getElementById('res-title').value='';document.getElementById('res-author').value='';document.getElementById('res-link').value='';document.getElementById('res-desc').value='';
+    setTimeout(()=>document.getElementById('res-status').textContent='',2000);
+  }catch(e){ alert('บันทึกไม่ได้: '+e.message); console.error(e); }
+};
+
+window.addCurriculum=async()=>{
+  const title=document.getElementById('cur-title').value.trim();
+  const link=document.getElementById('cur-link').value.trim();
+  const desc=document.getElementById('cur-desc').value.trim();
+  if(!link) return alert('ใส่ลิงก์ Drive ก่อน');
+  await addDoc(collection(db,"curriculum"),{title,faculty:"รวมทุกคณะ",meta:"MGMU",desc,link,pdfUrl:link,driveUrl:link,createdAt:serverTimestamp()});
+};
+
 window.addNews=async()=>{ const title=document.getElementById('news-title').value.trim(); const desc=document.getElementById('news-desc').value.trim(); const file=document.getElementById('news-img').files[0]; let img=""; if(file){ const r=ref(storage,'news/'+Date.now()+'_'+file.name); await uploadBytes(r,file); img=await getDownloadURL(r);} await addDoc(collection(db,"news"),{title,desc,imgUrl:img,createdAt:serverTimestamp()}); };
+
 window.delStudent=async(id)=>{ if(confirm('ลบ?')) await deleteDoc(doc(db,"students",id)); };
 window.delPersonnel=async(id)=>{ if(confirm('ลบ?')) await deleteDoc(doc(db,"personnel",id)); };
 window.delResearch=async(id)=>{ if(confirm('ลบงานวิจัย?')) await deleteDoc(doc(db,"research",id)); };
+window.delCurriculum=async(id)=>{ if(confirm('ลบหลักสูตร?')) await deleteDoc(doc(db,"curriculum",id)); };
 window.delNews=async(id)=>{ if(confirm('ลบ?')) await deleteDoc(doc(db,"news",id)); };
 </script>
 </body>
