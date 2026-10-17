@@ -108,7 +108,7 @@ function render(){
     return okQ && okF;
   });
   const el=document.getElementById('list');
-  if(filtered.length===0){ el.innerHTML='<p style="opacity:.5">ยังไม่มีงานวิจัยในระบบ (รอแอดมินเพิ่ม)</p>'; return; }
+  if(filtered.length===0){ el.innerHTML='<p style="opacity:.5">ยังไม่มีงานวิจัยในระบบ</p>'; return; }
   el.innerHTML=filtered.map(x=>`
     <div class="card">
       <img src="${x.imgUrl||'mgmu.png'}" onerror="this.src='mgmu.png'">
