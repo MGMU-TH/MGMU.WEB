@@ -16,170 +16,186 @@
 .btn{background:var(--navy);color:#fff;padding:8px 14px;border-radius:8px;border:none;cursor:pointer}
 .btn-gold{background:var(--gold);color:var(--navy);font-weight:700;padding:8px 14px;border-radius:8px;border:none;cursor:pointer}
 input,textarea,select{width:100%;padding:10px;border:1px solid #d1d5db;border-radius:8px;margin-bottom:10px;font-family:"Sarabun"}
-.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px}
 .status{padding:8px 12px;border-radius:8px;font-size:12px;margin-bottom:12px}
 .status.ok{background:#dcfce7;color:#166534}
 .status.warn{background:#fef9c3;color:#854d0e}
 .realtime-dot{width:10px;height:10px;background:#22c55e;border-radius:50%;display:inline-block;animation:pulse 2s infinite}
 @keyframes pulse{0%{opacity:1}50%{opacity:.4}100%{opacity:1}}
 </style>
-      <link rel="stylesheet" href="phone.css">
+<link rel="stylesheet" href="phone.css">
 </head>
 <body>
-<!-- แก้ให้ทำงานได้: รองรับทั้ง localStorage และ Firebase Auth -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-const firebaseConfig = {
-  apiKey: "AIzaSyCg8IN6QUb4O3TAk-kGkoiefxGsezw1dPE",
-  authDomain: "mgmu-7ac39.firebaseapp.com",
-  projectId: "mgmu-7ac39",
-  storageBucket: "mgmu-7ac39.firebasestorage.app",
-  messagingSenderId: "371565700622",
-  appId: "1:371565700622:web:382d7a4a695daa2b1dfe5f"
-};
+const firebaseConfig = { apiKey: "AIzaSyCg8IN6QUb4O3TAk-kGkoiefxGsezw1dPE", authDomain: "mgmu-7ac39.firebaseapp.com", projectId: "mgmu-7ac39", storageBucket: "mgmu-7ac39.firebasestorage.app", messagingSenderId: "371565700622", appId: "1:371565700622:web:382d7a4a695daa2b1dfe5f" };
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-onAuthStateChanged(auth, (user)=>{
-  const localAdmin = localStorage.getItem('mgmu_user')==='admin';
-  if(!user &&!localAdmin){
-    location.href='login.html';
-  }
-});
-window.logout = async ()=>{
-  try{ await signOut(auth); }catch(e){}
-  localStorage.clear();
-  location.href='login.html';
-}
+onAuthStateChanged(auth, (user)=>{ const localAdmin = localStorage.getItem('mgmu_user')==='admin'; if(!user &&!localAdmin){ location.href='login.html'; } });
+window.logout = async ()=>{ try{ await signOut(auth); }catch(e){} localStorage.clear(); location.href='login.html'; }
 </script>
 
 <div class="sidebar">
-  <h2>MGMU ADMIN</h2>
-  <div style="display:flex;align-items:center;gap:6px;margin-bottom:16px"><span class="realtime-dot"></span><small style="font-size:11px">REAL-TIME ONLINE</small></div>
-  <div class="menu">
-    <a class="active" href="#">📊 ภาพรวม</a>
-    <a href="#students-mgmt">🎓 รายชื่อนักศึกษา (เปลี่ยนบ่อย)</a>
-    <a href="#news">📰 ข่าวสาร (เปลี่ยนบ่อย)</a>
-    <a href="index.html">🌐 ดูหน้าเว็บจริง</a>
-    <a href="#" onclick="logout()" style="margin-top:20px;color:#f87171">🚪 ออกจากระบบ</a>
-  </div>
-  <div style="margin-top:20px;background:#ffffff0f;padding:10px;border-radius:8px;font-size:11px">
-  <b>Firebase ใช้แค่ 2 อย่าง:</b><br>
-  • students<br>
-  • news<br>
-  ที่เหลือ Static ไม่เปลือง Read
-  </div>
+<h2>MGMU ADMIN</h2>
+<div style="display:flex;align-items:center;gap:6px;margin-bottom:16px"><span class="realtime-dot"></span><small style="font-size:11px">REAL-TIME ONLINE</small></div>
+<div class="menu">
+<a href="#overview">📊 ภาพรวม</a>
+<a href="#students-mgmt">🎓 นักศึกษา</a>
+<a href="#personnel-mgmt">👨‍⚕️ บุคลากร</a>
+<a href="#research-mgmt">🔬 งานวิจัย</a>
+<a href="#news">📰 ข่าวสาร</a>
+<a href="index.html">🌐 ดูหน้าเว็บจริง</a>
+<a href="#" onclick="logout()" style="margin-top:20px;color:#f87171">🚪 ออกจากระบบ</a>
+</div>
 </div>
 
-<div class="main">
-  <h1>แดชบอร์ด - 2 ระบบที่เปลี่ยนบ่อย <span style="background:#22c55e;color:#fff;padding:2px 8px;border-radius:20px;font-size:12px">LIVE</span></h1>
-  <p style="font-size:13px;opacity:.7;margin-bottom:16px">ตามที่คุณบอก: มีแค่ รายชื่อนักศึกษากับข่าวสาร ที่ต้องเปลี่ยนแปลงบ่อย - ที่เหลือ Static</p>
+<div class="main" id="overview">
+<h1>แดชบอร์ด - 4 ระบบ Real-time <span style="background:#22c55e;color:#fff;padding:2px 8px;border-radius:20px;font-size:12px">LIVE</span></h1>
+<div class="grid" style="margin-top:16px">
+<div class="card"><b id="count-students">-</b><br>นักศึกษา</div>
+<div class="card"><b id="count-personnel">-</b><br>บุคลากร</div>
+<div class="card"><b id="count-research">-</b><br>งานวิจัย</div>
+<div class="card"><b id="count-news">-</b><br>ข่าว</div>
+</div>
 
-  <div class="grid">
-    <div class="card"><b id="count-students">-</b><br>นักศึกษาในระบบ</div>
-    <div class="card"><b id="count-news">-</b><br>ข่าวทั้งหมด</div>
-    <div class="card"><b>Static</b><br><small style="color:#16a34a">ผู้บริหาร 2 คน (ไม่ใช้ Firebase)</small></div>
-  </div>
+<div class="card" id="students-mgmt" style="border:2px solid var(--gold)">
+<h3>🎓 จัดการรายชื่อนักศึกษา</h3>
+<div id="firebase-status" class="status warn">กำลังเชื่อมต่อ...</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<input id="stu-id" placeholder="รหัสนักศึกษา">
+<input id="stu-name" placeholder="ชื่อ-นามสกุล">
+<input id="stu-faculty" placeholder="คณะ: พิมพ์เอง เช่น พยาบาลศาสตร์">
+<input id="stu-year" placeholder="ชั้นปี: เช่น ปี 1">
+<select id="stu-status"><option value="ปกติ">ปกติ</option><option value="พ้นสภาพ">พ้นสภาพ</option><option value="ลาพัก">ลาพัก</option><option value="จบการศึกษา">จบ</option></select>
+</div>
+<button class="btn-gold" onclick="addStudent()">+ เพิ่มนักศึกษา</button>
+<div id="student-list" style="margin-top:16px"></div>
+</div>
 
-  <div class="card" id="students-mgmt" style="border:2px solid var(--gold)">
-    <h3>🎓 จัดการรายชื่อนักศึกษา - Firebase (เปลี่ยนบ่อย)</h3>
-    <div id="firebase-status" class="status warn">ยังไม่ได้ต่อ Firebase - โหมดจำลอง</div>
-    <p style="font-size:12px;opacity:.7;margin-bottom:12px">5 ฟิลด์: รหัสนักศึกษา / ชื่อ–นามสกุล / คณะ / ชั้นปี / สถานะนักศึกษา</p>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-      <input id="stu-id" placeholder="รหัสนักศึกษา: เช่น 65001">
-      <input id="stu-name" placeholder="ชื่อ–นามสกุล: เช่น นายสมชาย ใจดี">
-      <input id="stu-faculty" placeholder="คณะ: เช่น แพทยศาสตร์" list="fac-list">
-      <datalist id="fac-list"><option value="แพทยศาสตร์"><option value="พยาบาลศาสตร์"><option value="เภสัชศาสตร์"><option value="สาธารณสุขศาสตร์"><option value="เทคนิคการแพทย์"></datalist>
-      <input id="stu-year" placeholder="ชั้นปี: เช่น ปี 1, ปี 2">
-      <select id="stu-status"><option value="ปกติ">สถานะ: ปกติ</option><option value="พ้นสภาพ">พ้นสภาพ</option><option value="ลาพัก">ลาพักการศึกษา</option><option value="จบการศึกษา">จบการศึกษา</option><option value="รอตรวจสอบ">รอตรวจสอบ</option></select>
-    </div>
-    <button class="btn-gold" onclick="addStudent()">+ เพิ่มนักศึกษา (ทุกคนค้นหาเจอทันที)</button>
-    <div id="student-list" style="margin-top:16px"></div>
-  </div>
+<div class="card" id="personnel-mgmt" style="border:2px solid #3b82f6">
+<h3>👨‍⚕️ จัดการบุคลากร</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<input id="per-name" placeholder="ชื่อ-นามสกุล บุคลากร">
+<input id="per-position" placeholder="ตำแหน่ง เช่น อาจารย์">
+<input id="per-faculty" placeholder="คณะ: พิมพ์เอง เช่น พยาบาลศาสตร์">
+<input id="per-email" placeholder="อีเมล">
+<input id="per-img" type="file" accept="image/*">
+</div>
+<button class="btn-gold" onclick="addPersonnel()">+ เพิ่มบุคลากร</button>
+<div id="personnel-list" style="margin-top:16px"></div>
+</div>
 
-  <div class="card" id="news">
-    <h3>📰 จัดการข่าวสาร - Firebase (เปลี่ยนบ่อย)</h3>
-    <input id="news-title" placeholder="หัวข้อข่าวใหม่">
-    <textarea id="news-desc" placeholder="รายละเอียดข่าว"></textarea>
-    <input id="news-img" type="file" accept="image/*">
-    <button class="btn-gold" onclick="addNews()">+ เพิ่มข่าว</button>
-    <div id="news-list" style="margin-top:16px"></div>
-  </div>
+<div class="card" id="research-mgmt" style="border:2px solid #22c55e">
+<h3>🔬 จัดการงานวิจัย (ไปโผล่หน้า งานวิจัย.html)</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<input id="res-title" placeholder="ชื่องานวิจัย">
+<input id="res-author" placeholder="ชื่อผู้วิจัย">
+<input id="res-faculty" placeholder="คณะ: พิมพ์เอง เช่น พยาบาลศาสตร์">
+<input id="res-img" type="file" accept="image/*">
+</div>
+<textarea id="res-desc" placeholder="บทคัดย่อ / รายละเอียด"></textarea>
+<button class="btn-gold" onclick="addResearch()">+ เพิ่มงานวิจัย</button>
+<div id="research-list" style="margin-top:16px"></div>
+</div>
+
+<div class="card" id="news">
+<h3>📰 จัดการข่าวสาร</h3>
+<input id="news-title" placeholder="หัวข้อข่าวใหม่">
+<textarea id="news-desc" placeholder="รายละเอียดข่าว"></textarea>
+<input id="news-img" type="file" accept="image/*">
+<button class="btn-gold" onclick="addNews()">+ เพิ่มข่าว</button>
+<div id="news-list" style="margin-top:16px"></div>
+</div>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, serverTimestamp, query, orderBy, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCg8IN6QUb4O3TAk-kGkoiefxGsezw1dPE",
-  authDomain: "mgmu-7ac39.firebaseapp.com",
-  projectId: "mgmu-7ac39",
-  storageBucket: "mgmu-7ac39.firebasestorage.app",
-  messagingSenderId: "371565700622",
-  appId: "1:371565700622:web:382d7a4a695daa2b1dfe5f"
-};
-
+const firebaseConfig = { apiKey: "AIzaSyCg8IN6QUb4O3TAk-kGkoiefxGsezw1dPE", authDomain: "mgmu-7ac39.firebaseapp.com", projectId: "mgmu-7ac39", storageBucket: "mgmu-7ac39.firebasestorage.app", messagingSenderId: "371565700622", appId: "1:371565700622:web:382d7a4a695daa2b1dfe5f" };
 let db, storage;
 try{
-  const app = initializeApp(firebaseConfig);
-  db = getFirestore(app);
-  storage = getStorage(app);
-  document.getElementById('firebase-status').className='status ok';
-  document.getElementById('firebase-status').textContent='✅ ต่อ Firebase แล้ว - 2 ระบบ Real-time ทำงาน';
-  initRealtime();
-}catch(e){
-  document.getElementById('firebase-status').textContent='❌ Error: '+e.message;
-}
+const app = initializeApp(firebaseConfig);
+db = getFirestore(app);
+storage = getStorage(app);
+document.getElementById('firebase-status').className='status ok';
+document.getElementById('firebase-status').textContent='✅ ต่อ Firebase แล้ว - 4 ระบบ Real-time';
+initRealtime();
+}catch(e){ document.getElementById('firebase-status').textContent='❌ '+e.message; }
 
 function initRealtime(){
-  onSnapshot(query(collection(db, "students"), orderBy("createdAt","desc")), (snap)=>{
-    document.getElementById('count-students').textContent=snap.size;
-    document.getElementById('student-list').innerHTML=snap.docs.map(d=>{
-      const s=d.data();
-      return `<div style="display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #eee;font-size:13px"><span><b>${s.studentId}</b> - ${s.fullName} (${s.faculty} ${s.year}) <small style="background:#eef;padding:2px 6px;border-radius:10px">${s.status}</small></span><button onclick="delStudent('${d.id}')" style="color:red;border:none;background:none;cursor:pointer">ลบ</button></div>`;
-    }).join('');
-  });
-  onSnapshot(query(collection(db, "news"), orderBy("createdAt","desc")), (snap)=>{
-    document.getElementById('count-news').textContent=snap.size;
-    document.getElementById('news-list').innerHTML=snap.docs.map(d=>{
-      const data=d.data();
-      return `<div style="display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #eee"><span><b>${data.title}</b><br><small>${data.desc||''}</small></span><button onclick="delNews('${d.id}')" style="color:red;border:none;background:none;cursor:pointer">ลบ</button></div>`;
-    }).join('');
-  });
+onSnapshot(query(collection(db, "students"), orderBy("createdAt","desc")), snap=>{
+document.getElementById('count-students').textContent=snap.size;
+document.getElementById('student-list').innerHTML=snap.docs.map(d=>{const s=d.data(); return `<div style="display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #eee;font-size:13px"><span><b>${s.studentId}</b> - ${s.fullName} (${s.faculty} ${s.year}) <small style="background:#eef;padding:2px 6px;border-radius:10px">${s.status}</small></span><button onclick="delStudent('${d.id}')" style="color:red;border:none;background:none;cursor:pointer">ลบ</button></div>`;}).join('');
+});
+onSnapshot(query(collection(db, "personnel"), orderBy("createdAt","desc")), snap=>{
+document.getElementById('count-personnel').textContent=snap.size;
+document.getElementById('personnel-list').innerHTML=snap.docs.map(d=>{const s=d.data(); return `<div style="display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #eee;font-size:13px"><span><b>${s.name}</b> - ${s.position} (${s.faculty})</span><button onclick="delPersonnel('${d.id}')" style="color:red;border:none;background:none">ลบ</button></div>`;}).join('');
+});
+onSnapshot(query(collection(db, "research"), orderBy("createdAt","desc")), snap=>{
+document.getElementById('count-research').textContent=snap.size;
+document.getElementById('research-list').innerHTML=snap.docs.map(d=>{const s=d.data(); return `<div style="display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #eee;font-size:13px"><span><b>${s.title}</b> - ${s.faculty} <small>โดย ${s.author}</small></span><button onclick="delResearch('${d.id}')" style="color:red;border:none;background:none">ลบ</button></div>`;}).join('');
+});
+onSnapshot(query(collection(db, "news"), orderBy("createdAt","desc")), snap=>{
+document.getElementById('count-news').textContent=snap.size;
+document.getElementById('news-list').innerHTML=snap.docs.map(d=>{const data=d.data(); return `<div style="display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #eee"><span><b>${data.title}</b></span><button onclick="delNews('${d.id}')" style="color:red;border:none;background:none">ลบ</button></div>`;}).join('');
+});
 }
 
-// แก้ให้ทำงานได้: บันทึกแบบ Document ID = รหัสนักศึกษา เพื่อให้ check.html ค้นหาเจอ
+async function uploadImage(file, folder){
+if(!file) return "";
+const r=ref(storage, folder+'/'+Date.now()+'_'+file.name);
+await uploadBytes(r,file);
+return await getDownloadURL(r);
+}
+
 window.addStudent = async ()=>{
-  const studentId=document.getElementById('stu-id').value.trim();
-  const fullName=document.getElementById('stu-name').value.trim();
-  const faculty=document.getElementById('stu-faculty').value.trim();
-  const year=document.getElementById('stu-year').value.trim();
-  const status=document.getElementById('stu-status').value;
-  if(!studentId||!fullName) return alert('ใส่รหัสนักศึกษาและชื่อ–นามสกุลก่อน');
-  // ใช้ setDoc แทน addDoc เพื่อให้ ID = รหัสนักศึกษา (check.html จะได้หาเจอทั้งแบบ doc ID และแบบ query field)
-  await setDoc(doc(db,"students",studentId),{studentId, fullName, name:fullName, faculty, year, status, createdAt:serverTimestamp()});
-  document.getElementById('stu-id').value=''; document.getElementById('stu-name').value='';
+const studentId=document.getElementById('stu-id').value.trim();
+const fullName=document.getElementById('stu-name').value.trim();
+const faculty=document.getElementById('stu-faculty').value.trim();
+const year=document.getElementById('stu-year').value.trim();
+const status=document.getElementById('stu-status').value;
+if(!studentId||!fullName) return alert('ใส่รหัสและชื่อก่อน');
+await setDoc(doc(db,"students",studentId),{studentId, fullName, name:fullName, faculty, year, status, createdAt:serverTimestamp()});
+document.getElementById('stu-id').value=''; document.getElementById('stu-name').value='';
 };
-
+window.addPersonnel = async ()=>{
+const name=document.getElementById('per-name').value.trim();
+const position=document.getElementById('per-position').value.trim();
+const faculty=document.getElementById('per-faculty').value.trim();
+const email=document.getElementById('per-email').value.trim();
+const file=document.getElementById('per-img').files[0];
+if(!name) return alert('ใส่ชื่อบุคลากรก่อน');
+const imgUrl=await uploadImage(file,'personnel');
+await addDoc(collection(db,"personnel"),{name, position, faculty, email, imgUrl, createdAt:serverTimestamp()});
+document.getElementById('per-name').value=''; document.getElementById('per-position').value=''; document.getElementById('per-faculty').value='';
+};
+window.addResearch = async ()=>{
+const title=document.getElementById('res-title').value.trim();
+const author=document.getElementById('res-author').value.trim();
+const faculty=document.getElementById('res-faculty').value.trim();
+const desc=document.getElementById('res-desc').value.trim();
+const file=document.getElementById('res-img').files[0];
+if(!title) return alert('ใส่ชื่องานวิจัยก่อน');
+const imgUrl=await uploadImage(file,'research');
+await addDoc(collection(db,"research"),{title, author, faculty, desc, imgUrl, createdAt:serverTimestamp()});
+document.getElementById('res-title').value=''; document.getElementById('res-desc').value=''; document.getElementById('res-faculty').value='';
+};
 window.addNews = async ()=>{
-  const title=document.getElementById('news-title').value.trim();
-  const desc=document.getElementById('news-desc').value.trim();
-  const file=document.getElementById('news-img').files[0];
-  if(!title) return alert('ใส่หัวข้อก่อน');
-  let imgUrl="";
-  if(file){ const r=ref(storage, 'news/'+Date.now()+'_'+file.name); await uploadBytes(r,file); imgUrl=await getDownloadURL(r); }
-  await addDoc(collection(db,"news"),{title,desc,imgUrl,createdAt:serverTimestamp()});
-  document.getElementById('news-title').value=''; document.getElementById('news-desc').value='';
+const title=document.getElementById('news-title').value.trim();
+const desc=document.getElementById('news-desc').value.trim();
+const file=document.getElementById('news-img').files[0];
+if(!title) return alert('ใส่หัวข้อก่อน');
+let imgUrl="";
+if(file){ const r=ref(storage, 'news/'+Date.now()+'_'+file.name); await uploadBytes(r,file); imgUrl=await getDownloadURL(r); }
+await addDoc(collection(db,"news"),{title,desc,imgUrl,createdAt:serverTimestamp()});
+document.getElementById('news-title').value=''; document.getElementById('news-desc').value='';
 };
-
-window.delStudent = async (id)=>{
-  if(confirm('ลบนักศึกษาคนนี้?')) await deleteDoc(doc(db,"students",id));
-};
-window.delNews = async (id)=>{
-  if(confirm('ลบข่าวนี้?')) await deleteDoc(doc(db,"news",id));
-};
+window.delStudent = async (id)=>{ if(confirm('ลบ?')) await deleteDoc(doc(db,"students",id)); };
+window.delPersonnel = async (id)=>{ if(confirm('ลบบุคลากร?')) await deleteDoc(doc(db,"personnel",id)); };
+window.delResearch = async (id)=>{ if(confirm('ลบงานวิจัย?')) await deleteDoc(doc(db,"research",id)); };
+window.delNews = async (id)=>{ if(confirm('ลบข่าว?')) await deleteDoc(doc(db,"news",id)); };
 </script>
 </body>
 </html>
