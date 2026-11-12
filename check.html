@@ -86,7 +86,7 @@ footer small,footer li{font-size:13px;opacity:.8;list-style:none;margin-bottom:6
 
   <div style="margin-top:20px;background:var(--light);border-radius:12px;padding:16px;font-size:13px;display:flex;gap:12px;align-items:flex-start">
     <div style="font-size:20px">ℹ️</div>
-    <div><b>หมายเหตุ:</b> ระบบนี้ดึงข้อมูลจากระบบฐานข้อมูลกลาง ที่แอดมินเพิ่มไว้เท่านั้น ถ้าไม่พบรายชื่อกรุณาติดต่อฝ่ายทะเบียน<br><small style="opacity:.6">หากไม่มีบัตรจะไม่สามรถตรวจสอบข้อมูลท่านได้</small></div>
+    <div><b>หมายเหตุ:</b> ระบบนี้ดึงข้อมูลจากระบบฐานข้อมูล หากข้อมูลผิดพลาดหรือไม่พบรายชื่อกรุณาติดต่อฝ่ายทะเบียน<br><small style="opacity:.6">หากไม่มีบัตรจะไม่สามรถตรวจสอบข้อมูลท่านได้</small></div>
   </div>
 </div>
 
@@ -115,7 +115,7 @@ let db;
 try{
   const app=initializeApp(firebaseConfig);
   db=getFirestore(app);
-  document.getElementById('status').textContent='✅ ค้นหา Real-time';
+  document.getElementById('status').textContent='ระบบเช็คข้อมูลนักศึกษา';
 }catch(e){
   document.getElementById('status').textContent='❌ '+e.message;
 }
