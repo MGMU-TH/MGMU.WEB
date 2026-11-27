@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=width=1280">
+<title>ไม่พบหน้านี้ | MGMU</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;700&family=Noto+Serif+Thai:wght@700&display=swap" rel="stylesheet" />
+<style>
+:root { --navy:#0d1b36; --navy2:#162a56; --gold:#c9a86a; --gold2:#e9c77a; }
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Sarabun",sans-serif;background:#f4f6f9;color:var(--navy);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;position:relative;overflow:hidden}
+/* พื้นหลังตกแต่ง */
+body::before{content:'';position:absolute;width:520px;height:520px;background:radial-gradient(circle,rgba(201,168,106,.28),transparent 70%);top:-180px;right:-120px}
+body::after{content:'';position:absolute;width:420px;height:420px;background:radial-gradient(circle,rgba(13,27,54,.12),transparent 70%);bottom:-150px;left:-100px}
+.card{position:relative;z-index:2;background:#fff;border-radius:24px;padding:48px 56px 36px;max-width:640px;width:100%;text-align:center;box-shadow:0 20px 50px rgba(13,27,54,.12);border-top:6px solid var(--gold)}
+.badge{display:inline-block;background:#fff7e6;color:#8a6a1a;border:1px solid var(--gold);padding:5px 14px;border-radius:20px;font-size:13px;font-weight:700;letter-spacing:1px}
+.logo-box{width:130px;height:130px;margin:20px auto 14px;background:#0d1b36;border-radius:50%;display:grid;place-items:center;box-shadow:0 10px 24px rgba(13,27,54,.25);border:4px solid var(--gold)}
+.logo-box img{width:90px;height:90px;object-fit:contain;border-radius:50%;background:#fff}
+.code{font-family:"Noto Serif Thai",serif;font-size:76px;font-weight:700;line-height:1;color:var(--navy);letter-spacing:2px}
+.code span{color:var(--gold)}
+.card h1{font-family:"Noto Serif Thai",serif;font-size:38px;font-weight:400;margin-top:6px}
+.card h2{font-family:"Noto Serif Thai",serif;font-size:30px;font-weight:400;line-height:1.4;opacity:.85}
+.card h3{font-family:"Noto Serif Thai",serif;font-size:30px;font-weight:400;line-height:1.4;margin-bottom:8px}
+.card p{font-size:14px;opacity:.6;margin-top:4px}
+.btn-row{margin-top:26px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-home{background:var(--navy);color:#fff!important;padding:13px 28px;border-radius:20px;font-weight:700;font-size:16px;display:inline-block}
+.btn-home:hover{background:var(--navy2)}
+.btn-line{border:1.5px solid var(--navy);color:var(--navy)!important;padding:12px 26px;border-radius:20px;font-weight:700;font-size:16px;display:inline-block;background:#fff}
+.note{position:relative;z-index:2;margin-top:22px;font-size:13px;opacity:.6;text-align:center}
+@media(max-width:600px){.card{padding:32px 24px}.code{font-size:58px}.card h1{font-size:30px}.card h2,.card h3{font-size:24px}}
+</style>
+<link rel="stylesheet" href="phone.css">
+</head>
+<body>
+<!-- Content -->
+<!-- แก้....ตรงนี้นะ -->
+<div class="card">
+<span class="badge">✦ MGMU • 404 NOT FOUND</span>
+<div class="logo-box"><img src="mgmu.png" onerror="this.src='https://via.placeholder.com/90?text=MGMU'"></div>
+<div class="code">4<span>0</span>4</div>
+<h1>อัยหย่า !</h1>
+<h2>หาม่ายนิ พันพรื้อหล่าว</h2>
+<h3>หาหน้าที่ต้องการไม่เจอนิด</h3>
+<p>หน้าที่คุณหาอาจถูกย้าย เปลี่ยนชื่อ หรือลบไปแล้ว<br>ไม่พรื้อ กลับหน้าหลักกันก่อนนะ</p>
+<div class="btn-row">
+<a class="btn-home" href="index.html">🏠 กลับหน้าหลัก</a>
+<a class="btn-line" href="contact.html">ติดต่อทีมงาน</a>
+</div>
+</div>
+<div class="note">- เกิดข้อผิดพลาด หาหน้าที่คุณต้องการไม่เจอ ติดต่อทีมงานหรือแอดมิน -</div>
+</body>
+</html>
